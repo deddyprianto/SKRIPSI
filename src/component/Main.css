@@ -1,7 +1,107 @@
-.container__main {
-  height: 50%;
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap");
+.containerInti__main {
+  display: flex;
+  flex-direction: column;
 }
-.container img {
+.container__main {
+  height: 78vh;
+  background-color: rgb(21, 32, 43);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text__main {
+  height: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.text__main h1 {
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  font-family: "Kalam", cursive;
+}
+.text__main p {
+  margin-top: 50px;
+  color: white;
+}
+.svg__main {
+  margin-top: -300px;
+}
+.fitur {
+  margin-top: 15em;
   width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fitur h1 {
+  font-size: 40px;
+}
+.card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  grid-gap: 10px;
+  place-content: center;
+}
+.card__fitur {
+  width: 300px;
+  height: 300px;
+  background-color: #eaeaea;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card__fitur p {
+  text-align: center;
+}
+@media (max-width: 576px) {
+  .fitur {
+    margin-top: 10em;
+  }
+  .card__fitur {
+    width: 275px;
+    height: 200px;
+    background-color: #eaeaea;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+  }
+  .containerInti__main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .svg__main {
+    margin-top: -99px;
+  }
+  .container__main {
+    height: 78vh;
+    background-color: rgb(21, 32, 43);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .text__main h1 {
+    font-size: 29px;
+    color: white;
+    text-align: center;
+    font-family: "Kalam", cursive;
+  }
+  .text__main p {
+    font-size: 15px;
+    text-align: center;
+  }
 }

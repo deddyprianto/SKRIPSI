@@ -1,21 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=MuseoModerno&display=swap");
 * {
   padding: 0;
   margin: 0;
 }
 h1 {
   font-size: 20px;
-  background: linear-gradient(to left, #e42424, #7fc0da);
+  background: linear-gradient(to left, #c8c8c8, #60b9dd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-family: "Kalam", cursive;
+}
+h3 {
+  font-family: "Montserrat Alternates", sans-serif;
+}
+p {
+  font-family: "MuseoModerno", cursive;
 }
 .container {
   display: grid;
-  grid-template-rows: 70px 1fr 70px;
+  grid-template-rows: 70px 1fr 50px;
   grid-template-areas:
     "nav"
     "main"
     "footer";
-  height: 100vh;
 }
 .MuiAppBar-root {
   grid-area: "nav";
@@ -25,4 +34,10 @@ h1 {
 }
 .footer {
   grid-area: "footer";
+}
+@media (max-width: 576px) {
+  .container {
+    /* width: 100%;
+     */
+  }
 }

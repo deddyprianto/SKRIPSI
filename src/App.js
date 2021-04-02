@@ -6,7 +6,10 @@ import MakeQrCode from "./component/MakeQrCode";
 import ScanQrCode from "./component/ScanQrCode";
 import Navbar from "./Layout/Navbar";
 import Footer from "./Layout/Footer";
+import useWindowSize from "./CustomHook/useWindowSize";
+import BawahNavigation from "./Layout/BawahNavigation";
 function App() {
+  const { width } = useWindowSize();
   return (
     <Router>
       <div className="container">
@@ -22,7 +25,7 @@ function App() {
             <Main />
           </Route>
         </Switch>
-        <Footer />
+        {width < 800 ? <BawahNavigation /> : <Footer />}
       </div>
     </Router>
   );

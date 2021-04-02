@@ -1,0 +1,131 @@
+.container__make {
+  display: flex;
+  flex-direction: column;
+}
+.container__bg {
+  height: 78vh;
+  background-color: rgb(21, 32, 43);
+}
+.svg__make {
+  margin-top: -279px;
+}
+.textContent__make {
+  margin-top: 130px;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.textContent__make h1 {
+  color: white;
+  font-size: 70px;
+}
+.textContent__make {
+  color: white;
+  font-size: 20px;
+}
+.img__make {
+  margin-top: 50px;
+  width: 100px;
+}
+.qrcode {
+  margin-top: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.qrcode img {
+  width: 300px;
+  height: 300px;
+}
+.content__qrcode {
+  width: 50% !important;
+  height: 400px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.content__qrcode .inputan {
+  width: 70%;
+  background-color: white;
+  height: 38px;
+  border-radius: 20px;
+  border: 1px solid gray;
+}
+.inputan input {
+  border-radius: 20px;
+  width: 100%;
+  height: 38px;
+  outline: none;
+  border: none;
+  text-align: center;
+}
+.inputan input::placeholder {
+  text-align: center;
+}
+.text__judul {
+  width: 100%;
+}
+.text__judul h1 {
+  font-size: 40px;
+  text-align: center;
+}
+.btn__qrcode {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button__Makeqrcode {
+  margin-top: 10px;
+  width: 200px;
+  height: 50px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: rgb(21, 32, 43);
+  color: white;
+  cursor: pointer;
+}
+.gambar__qrcodeRender {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+}
+.gambar__qrcodeRender a {
+  text-decoration: none;
+  color: black;
+}
+.text__pSpecial {
+  font-size: 15px;
+  font-style: italic;
+  color: gray;
+}
+@media (max-width: 576px) {
+  .textContent__make h1 {
+    font-size: 29px;
+  }
+  .textContent__make p {
+    font-size: 20px;
+  }
+  .svg__make {
+    margin-top: -78px;
+  }
+  .text__judul h1 {
+    font-size: 27px;
+    text-align: center;
+  }
+  .qrcode {
+    flex-wrap: wrap;
+  }
+  .content__qrcode .inputan {
+    width: 100% !important;
+  }
+}

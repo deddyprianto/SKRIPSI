@@ -13,6 +13,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "aos": "^2.3.4",
     "qr-scanner": "^1.2.0",
     "qrcode": "^1.4.4",
     "react": "^17.0.2",

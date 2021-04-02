@@ -1,0 +1,62 @@
+.container__ScanQrCode {
+  display: flex;
+  flex-direction: column;
+}
+.scanQrCode {
+  height: 78vh;
+  background-color: rgb(21, 32, 43);
+}
+.svg__scanQrcode {
+  margin-top: -250px;
+}
+.content__qrcode {
+  width: 100%;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.content__qrcode h1 {
+  font-size: 50px;
+}
+.content__qrcode img {
+  width: 200px;
+  height: 200px;
+}
+.btn__scan {
+  width: 500px !important;
+  height: 40px !important;
+  color: white;
+  background-color: green;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 50px;
+}
+.content__hasil {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scann__btn {
+  width: 150px;
+  height: 40px;
+  border-radius: 20px;
+  border-color: rgb(175, 175, 175);
+  outline: none;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+}
+.content__hasil input {
+  color: white;
+}
+.content__hasil p {
+  margin-top: 40px;
+  color: white;
+  text-align: center;
+}

@@ -1,22 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap");
 .navbar {
   position: sticky;
   position: -webkit-sticky;
   top: 0; /* required */
   width: 100%;
-  background-color: rgb(12, 159, 207);
+  background-color: rgb(21, 32, 43);
   height: 70px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
+
 .nav__title {
   height: 100px;
   display: flex;
   align-items: center;
-  font-size: 20px;
-  background: linear-gradient(to left, #ffffff, #000000);
+  font-size: 21px;
+  background: linear-gradient(to left, #c8c8c8, #60b9dd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-family: "Kalam", cursive;
+  font-weight: bold;
 }
 .list__link {
   display: flex;
