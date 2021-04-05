@@ -8,6 +8,8 @@ import Navbar from "./Layout/Navbar";
 import Footer from "./Layout/Footer";
 import useWindowSize from "./CustomHook/useWindowSize";
 import BawahNavigation from "./Layout/BawahNavigation";
+import Divider from "@material-ui/core/Divider";
+
 function App() {
   const { width } = useWindowSize();
   return (

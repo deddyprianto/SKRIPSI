@@ -10,7 +10,7 @@
   margin-top: -250px;
 }
 .content__qrcode {
-  width: 100%;
+  width: 100% !important;
   height: 700px;
   display: flex;
   justify-content: center;

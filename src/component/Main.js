@@ -11,7 +11,7 @@ function Home() {
       <div className="container__main">
         <div className="text__main">
           <h1 data-aos="fade-down">Welcome To App Scanner Using QR CODE </h1>
-          <p data-aos-delay="1000" data-aos="fade-up">
+          <p data-aos-delay="1000" data-aos="fade-down">
             Ribet menggunakan absensi manual, yuk pake absensi qrcode untuk
             meminimize keribetan
           </p>

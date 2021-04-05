@@ -4,11 +4,12 @@
   position: -webkit-sticky;
   top: 0; /* required */
   width: 100%;
-  background-color: rgb(21, 32, 43);
   height: 70px;
+  background-color: rgb(21, 32, 43);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  z-index: 9999999;
 }
 
 .nav__title {

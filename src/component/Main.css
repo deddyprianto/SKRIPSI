@@ -64,8 +64,15 @@
   text-align: center;
 }
 @media (max-width: 576px) {
-  .fitur {
-    margin-top: 10em;
+  .card {
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    grid-column-gap: 5px;
+    place-items: center;
+  }
+
+  .fitur h1 {
+    font-size: 20px;
   }
   .card__fitur {
     width: 275px;
@@ -76,7 +83,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 10px;
   }
   .containerInti__main {
     width: 100%;
@@ -84,18 +90,11 @@
     flex-direction: column;
   }
   .svg__main {
-    margin-top: -99px;
+    margin-top: -70px;
   }
-  .container__main {
-    height: 78vh;
-    background-color: rgb(21, 32, 43);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
+
   .text__main h1 {
-    font-size: 29px;
+    font-size: 20px;
     color: white;
     text-align: center;
     font-family: "Kalam", cursive;

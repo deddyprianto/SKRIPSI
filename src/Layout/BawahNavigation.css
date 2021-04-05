@@ -1,8 +1,18 @@
-.container__bawahNavigation {
-  margin-top: 20px;
+@media (max-width: 576px) {
+  .MuiBottomNavigation-root {
+    width: 100% !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    background-color: #f7f7f7 !important;
+  }
+  .MuiSvgIcon-root {
+    width: 20px !important ;
+  }
+  .link__pertama
+    .MuiButtonBase-root
+    .MuiBottomNavigationAction-wrapper
+    .MuiBottomNavigationAction-label {
+    font-size: 10px !important;
+    color: black !important;
+  }
 }
-/* .container__bawahNavigation > .MuiBottomNavigation-root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
