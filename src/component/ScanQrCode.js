@@ -16,7 +16,6 @@ function ScanQrCode() {
     alert(
       "Terimakasih, tombol ini di berguna untuk menjaga aplikasi agar akurat dalam pemindaian data dari Qrcode"
     );
-    console.log(`you press me`);
     const dataImg = document.getElementById("img");
     dataImg.addEventListener("change", () => {
       const fileImg = dataImg.files[0];

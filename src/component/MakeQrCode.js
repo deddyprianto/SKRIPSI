@@ -84,7 +84,7 @@ function MakeQrCode() {
               </a>
             </div>
           ) : (
-            <p style={{ marginTop: "50px" }}>
+            <p style={{ marginTop: "50px", textAlign: "center" }}>
               Masukkan nama karyawan yg lengkap
             </p>
           )}

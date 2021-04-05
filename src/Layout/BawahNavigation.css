@@ -8,11 +8,9 @@
   .MuiSvgIcon-root {
     width: 20px !important ;
   }
-  .link__pertama
-    .MuiButtonBase-root
-    .MuiBottomNavigationAction-wrapper
-    .MuiBottomNavigationAction-label {
+
+  .MuiBottomNavigationAction-label {
     font-size: 10px !important;
-    color: black !important;
+    color: gray !important;
   }
 }

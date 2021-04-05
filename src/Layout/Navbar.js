@@ -9,16 +9,16 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="nav__title">Absen Scan QR Code</div>
+      <div className="nav__title">Absensi Guru MelBourne</div>
       {width <= 800 ? (
-        <div className="nav__title">Welcome</div>
+        <div className="nav__title">2021</div>
       ) : (
         <ul className="list__link">
           <Link to="/">
             <li>Home</li>
           </Link>
           <Link to="makeqrcode">
-            <li>Make QRCode</li>
+            <li>Buat QRCode</li>
           </Link>
           <Link to="scanqrcode">
             <li>Scan QRCode</li>

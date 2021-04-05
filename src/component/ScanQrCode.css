@@ -60,3 +60,23 @@
   color: white;
   text-align: center;
 }
+@media (max-width: 576px) {
+  .content__qrcode {
+    justify-content: flex-start;
+  }
+  .svg__scanQrcode {
+    margin-top: -65px;
+  }
+  .content__qrcode h1 {
+    font-size: 20px;
+  }
+  .content__qrcode img {
+    width: 50px;
+    height: 50px;
+  }
+  .content__qrcode button {
+    width: 234px !important;
+    height: 50px !important;
+    border-radius: 10px !important;
+  }
+}

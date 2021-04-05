@@ -110,16 +110,17 @@
 }
 @media (max-width: 576px) {
   .textContent__make h1 {
-    font-size: 29px;
-  }
-  .textContent__make p {
     font-size: 20px;
   }
+  .textContent__make p {
+    font-size: 15px;
+    text-align: center;
+  }
   .svg__make {
-    margin-top: -78px;
+    margin-top: -62px;
   }
   .text__judul h1 {
-    font-size: 27px;
+    font-size: 20px;
     text-align: center;
   }
   .qrcode {
