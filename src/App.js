@@ -11,6 +11,23 @@ import BawahNavigation from "./Layout/BawahNavigation";
 import Divider from "@material-ui/core/Divider";
 
 function App() {
+  // lakukan hal yg baik
+  const promise = new Promise((resolve, reject) => {
+    resolve();
+  });
+  promise
+    .then(() => console.log("ini adalah saya"))
+    .then(
+      () =>
+        new Promise((resolve) => {
+          settimeout(() => {
+            console.log("second");
+            resolve();
+          }, {});
+        })
+    )
+    .then(() => setTimeout(() => console.log("third")));
+
   const { width } = useWindowSize();
   return (
     <Router>
