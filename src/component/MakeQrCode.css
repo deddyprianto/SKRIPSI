@@ -7,7 +7,7 @@
   background-color: rgb(21, 32, 43);
 }
 .svg__make {
-  margin-top: -279px;
+  margin-top: -186px;
 }
 .textContent__make {
   margin-top: 130px;
@@ -30,31 +30,22 @@
   margin-top: 50px;
   width: 100px;
 }
-.qrcode {
-  margin-top: 5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
 
-.qrcode img {
+.img__qrcode {
   width: 300px;
   height: 300px;
 }
-.content__qrcode {
-  width: 50% !important;
-  height: 400px;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-}
-.content__qrcode .inputan {
+
+/* .content__qrcode .inputan {
   width: 70%;
   background-color: white;
   height: 38px;
   border-radius: 20px;
   border: 1px solid gray;
+}
+.MuiGrid-item {
+  background-color: red;
+  width: 100%;
 }
 .inputan input {
   border-radius: 20px;
@@ -74,12 +65,7 @@
   font-size: 40px;
   text-align: center;
 }
-.btn__qrcode {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 .button__Makeqrcode {
   margin-top: 10px;
   width: 200px;
@@ -90,6 +76,9 @@
   background-color: rgb(21, 32, 43);
   color: white;
   cursor: pointer;
+} */
+.btn__qrcode {
+  margin: 100px;
 }
 .gambar__qrcodeRender {
   width: 100%;
@@ -108,6 +97,13 @@
   font-style: italic;
   color: gray;
 }
+
+/* .MuiGrid-root {
+  background-color: lightblue;
+} */
+.text__nama {
+  text-align: center;
+}
 @media (max-width: 576px) {
   .textContent__make h1 {
     font-size: 20px;
@@ -123,10 +119,7 @@
     font-size: 20px;
     text-align: center;
   }
-  .qrcode {
-    flex-wrap: wrap;
-  }
-  .content__qrcode .inputan {
+  /* .content__qrcode .inputan {
     width: 100% !important;
-  }
+  } */
 }

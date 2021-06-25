@@ -9,7 +9,7 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="nav__title">Absensi Guru MelBourne</div>
+      <div className="nav__title">Absensi Guru SDS MelBourne</div>
       {width <= 800 ? (
         <div className="nav__title">2021</div>
       ) : (

@@ -17,6 +17,13 @@
   align-items: center;
   flex-direction: column;
 }
+.MuiFormControl-root {
+  margin-top: 10px !important;
+}
+.MuiFormControlLabel-root {
+  color: white;
+}
+
 .content__qrcode h1 {
   font-size: 50px;
 }

@@ -4,8 +4,16 @@ import QrScanner from "qr-scanner";
 import codescanner from "../img/codescanner.png";
 import "./ScanQrCode.css";
 import Aos from "aos";
+import { db } from "../firebase";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+
 function ScanQrCode() {
   const [resscancamera, setResscancamera] = useState("");
+  const [value, setValue] = useState("Hadir");
   useEffect(() => {
     Aos.init({
       duration: "2000",
@@ -16,6 +24,7 @@ function ScanQrCode() {
     alert(
       "Terimakasih, tombol ini di berguna untuk menjaga aplikasi agar akurat dalam pemindaian data dari Qrcode"
     );
+
     const dataImg = document.getElementById("img");
     dataImg.addEventListener("change", () => {
       const fileImg = dataImg.files[0];
@@ -28,6 +37,22 @@ function ScanQrCode() {
     });
   };
 
+  const saveData = (e) => {
+    e.preventDefault();
+    const checkData = db.collection("dataabsen").doc().set(
+      {
+        nama: resscancamera,
+        status: value,
+      },
+      { merge: true }
+    );
+    if (checkData) {
+      return alert("kamu berhasil di absensi");
+    }
+  };
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
   return (
     <div className="container__ScanQrCode">
       <div className="scanQrCode">
@@ -53,10 +78,41 @@ function ScanQrCode() {
             data-aos-delay="3000"
           >
             <input type="file" id="img" />
-            <button className="scann__btn" onClick={play}>
-              Start Scann
+            {resscancamera && <p>Halo {resscancamera}</p>}
+
+            <FormControl component="fieldset" color="secondary">
+              <FormLabel component="legend">Status Kehadiran</FormLabel>
+              <RadioGroup
+                aria-label="gender"
+                name="gender1"
+                value={value}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value="Hadir"
+                  control={<Radio color="primary" />}
+                  label="Hadir"
+                />
+                <FormControlLabel
+                  value="Sakit"
+                  control={<Radio color="primary" />}
+                  label="Sakit"
+                />
+                <FormControlLabel
+                  value="Izin"
+                  control={<Radio color="primary" />}
+                  label="Izin"
+                />
+                <FormControlLabel
+                  value="Alpha"
+                  control={<Radio color="primary" />}
+                  label="Alpha"
+                />
+              </RadioGroup>
+            </FormControl>
+            <button className="scann__btn" onClick={saveData}>
+              ABSEN SEKARANG !
             </button>
-            {resscancamera && <p>Halo {resscancamera} kamu sudah di absen</p>}
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./Main.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 function Home() {
+  const refInputTypeFile = useRef(null);
   useEffect(() => {
     AOS.init({ duration: 2000 });
   }, []);

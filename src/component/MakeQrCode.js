@@ -5,7 +5,10 @@ import "aos/dist/aos.css";
 import image from "../img/code.png";
 import qrtemplate from "../img/qrcodetemplate.png";
 import QRCode from "qrcode";
-
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
 function MakeQrCode() {
   const [inputanqrcode, setInputanqrcode] = useState("");
   const [showwarn, setShowwarn] = useState(false);
@@ -20,6 +23,7 @@ function MakeQrCode() {
         setShowwarn(true);
       })
       .catch((err) => console.log(err));
+    setInputanqrcode("");
   };
 
   return (
@@ -51,25 +55,31 @@ function MakeQrCode() {
 
       {/* make UI qr code */}
       <div className="text__judul">
-        <h1 data-aos="fade-down">
+        <h1 data-aos="fade-down" className="text__nama">
           Buat Nama lengkap dan hasilkan Qr Code Pegawai anda Di sini
         </h1>
       </div>
-      <div className="qrcode">
-        {/* you must build a image component */}
-        <img src={qrtemplate} alt="" data-aos="fade-up" />
+      <Grid container xs={12} justify="center" alignItems="center">
+        <img
+          src={qrtemplate}
+          className="img__qrcode"
+          alt=""
+          data-aos="fade-up"
+        />
         <div className="content__qrcode" data-aos="fade-up">
           <div className="inputan">
-            <input
-              type="text"
-              placeholder="masukan nama guru dan hasil kan qrcode"
-              onChange={(val) => setInputanqrcode(val.target.value)}
+            <TextField
+              fullWidth
+              id="standard-basic"
+              onChange={(e) => setInputanqrcode(e.target.value)}
+              value={inputanqrcode}
+              label="Masukkan nama Guru"
             />
           </div>
           <div className="btn__qrcode">
-            <button onClick={handelQrCode} className="button__Makeqrcode">
-              Buat Qrcode
-            </button>
+            <Button variant="contained" onClick={handelQrCode} color="primary">
+              Buat QRCode
+            </Button>
           </div>
           {inputanqrcode.length > 10 ? (
             <div className="gambar__qrcodeRender">
@@ -85,11 +95,11 @@ function MakeQrCode() {
             </div>
           ) : (
             <p style={{ marginTop: "50px", textAlign: "center" }}>
-              Masukkan nama karyawan yg lengkap
+              Haloo, mari membuat semua nya mudah
             </p>
           )}
         </div>
-      </div>
+      </Grid>
     </div>
   );
 }

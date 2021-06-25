@@ -1,0 +1,9 @@
+.container__Login {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.button__login {
+  width: 50%;
+  background-color: white;
+}

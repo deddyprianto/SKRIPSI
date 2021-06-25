@@ -29,7 +29,10 @@ function BawahNavigation() {
     e.preventDefault();
     history.push("/scanqrcode");
   };
-
+  const handleBottomLaporan = (e) => {
+    e.preventDefault();
+    history.push("/login");
+  };
   return (
     <BottomNavigation
       value={value}
@@ -57,7 +60,11 @@ function BawahNavigation() {
         icon={<CropFreeIcon />}
       />
 
-      <BottomNavigationAction label="Login" icon={<AccountCircleIcon />} />
+      <BottomNavigationAction
+        onClick={handleBottomLaporan}
+        label="Login"
+        icon={<AccountCircleIcon />}
+      />
     </BottomNavigation>
   );
 }
