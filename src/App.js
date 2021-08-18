@@ -19,7 +19,20 @@ function App() {
     <Router>
       <div className="container">
         <Navbar />
-        <Suspense fallback={<div>Page Is Loading, Please wait...</div>}>
+        <Suspense
+          fallback={
+            <div
+              style={{
+                height: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h1>Page Is Loading, Please wait...</h1>
+            </div>
+          }
+        >
           <Switch>
             <Route path="/laporan">
               <LaporanScreen />
@@ -37,8 +50,8 @@ function App() {
               <Main />
             </Route>
           </Switch>
-          {width < 800 ? <BawahNavigation /> : <Footer />}
         </Suspense>
+        {width < 800 ? <BawahNavigation /> : <Footer />}
       </div>
     </Router>
   );

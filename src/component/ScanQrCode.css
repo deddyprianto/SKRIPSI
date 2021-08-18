@@ -1,6 +1,7 @@
 .container__ScanQrCode {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 .scanQrCode {
   height: 78vh;

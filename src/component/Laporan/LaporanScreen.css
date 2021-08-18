@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 361px 1fr;
   grid-template-areas: "sidebar main";
+  height: 100vh;
 }
 .sidebar__Laporan {
   grid-area: sidebar;

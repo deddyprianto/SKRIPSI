@@ -14,6 +14,11 @@ import FormLabel from "@material-ui/core/FormLabel";
 function ScanQrCode() {
   const [resscancamera, setResscancamera] = useState("");
   const [value, setValue] = useState("Hadir");
+  const [hadir, setHadir] = useState(false);
+  const [sakit, setSakit] = useState(false);
+  const [izin, setIzin] = useState(false);
+  const [alpha, setAlpha] = useState(false);
+
   useEffect(() => {
     Aos.init({
       duration: "2000",
@@ -39,19 +44,20 @@ function ScanQrCode() {
 
   const saveData = (e) => {
     e.preventDefault();
-    const checkData = db.collection("dataabsen").doc().set(
-      {
-        nama: resscancamera,
-        status: value,
-      },
-      { merge: true }
-    );
+    // const checkData = db.collection("dataabsen").doc().set(
+    //   {
+    //     nama: resscancamera,
+    //     status: value,
+    //   },
+    //   { merge: true }
+    // );
     if (checkData) {
       return alert("kamu berhasil di absensi");
     }
   };
   const handleChange = (event) => {
     setValue(event.target.value);
+    console.log(event.target.value);
   };
   return (
     <div className="container__ScanQrCode">
@@ -72,6 +78,7 @@ function ScanQrCode() {
           >
             Please,Tekan tombol INI sebelum memulai
           </button>
+
           <div
             className="content__hasil"
             data-aos="fade-down"
@@ -81,31 +88,55 @@ function ScanQrCode() {
             {resscancamera && <p>Halo {resscancamera}</p>}
 
             <FormControl component="fieldset" color="secondary">
-              <FormLabel component="legend">Status Kehadiran</FormLabel>
-              <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value={value}
-                onChange={handleChange}
-              >
+              <FormLabel component="legend" style={{ color: "white" }}>
+                Status Kehadiran
+              </FormLabel>
+              <RadioGroup aria-label="gender" name="gender1" value={value}>
                 <FormControlLabel
-                  value="Hadir"
-                  control={<Radio color="primary" />}
+                  control={
+                    <Radio
+                      color="primary"
+                      value="Hadir"
+                      onChange={handleChange}
+                      checked={hadir}
+                    />
+                  }
                   label="Hadir"
                 />
                 <FormControlLabel
-                  value="Sakit"
-                  control={<Radio color="primary" />}
+                  control={
+                    <Radio
+                      color="secondary"
+                      color="primary"
+                      value="Sakit"
+                      onChange={handleChange}
+                      checked={sakit}
+                    />
+                  }
                   label="Sakit"
                 />
                 <FormControlLabel
-                  value="Izin"
-                  control={<Radio color="primary" />}
+                  control={
+                    <Radio
+                      color="primary"
+                      color="primary"
+                      value="Izin"
+                      onChange={handleChange}
+                      checked={izin}
+                    />
+                  }
                   label="Izin"
                 />
                 <FormControlLabel
-                  value="Alpha"
-                  control={<Radio color="primary" />}
+                  control={
+                    <Radio
+                      color="primary"
+                      color="primary"
+                      value="Alpha"
+                      onChange={handleChange}
+                      checked={alpha}
+                    />
+                  }
                   label="Alpha"
                 />
               </RadioGroup>

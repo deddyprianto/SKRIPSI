@@ -7,6 +7,7 @@ function Home() {
   useEffect(() => {
     AOS.init({ duration: 2000 });
   }, []);
+
   return (
     <div className="containerInti__main">
       <div className="container__main">
