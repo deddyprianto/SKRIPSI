@@ -1,66 +1,68 @@
-.container__Laporan {
+.container-Laporan {
   display: grid;
-  grid-template-columns: 361px 1fr;
-  grid-template-areas: "sidebar main";
+  grid-template-columns: 0.6fr 2.3fr;
+  grid-template-rows: 100%;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas: "SideBarLaporan MainLaporan";
   height: 100vh;
-}
-.sidebar__Laporan {
-  grid-area: sidebar;
-  background-color: rgb(8 35 62);
-  width: 361px;
-  height: 100vh;
-}
-.containerItem__Laporan {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  border-bottom: 1px solid #eaeaea;
-}
-.item__laporan {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.item__laporan h2,
-p {
-  color: white;
-}
-.main__Laporan {
-  grid-area: main;
-  background-color: #eaeaea;
-  padding: 20px;
-}
-.main__Laporan h2 {
-  text-align: center;
 }
 
-@media (max-width: 576px) {
-  .container__Laporan {
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-areas:
-      "sidebar"
-      "main";
+.MainLaporan {
+  grid-area: MainLaporan;
+  background-color: #eaeaea;
+}
+
+.SideBarLaporan {
+  grid-area: SideBarLaporan;
+}
+/* Sidebar Header */
+
+.header-Sidebar {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+.content-text {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* main Laporan */
+.container-mainLaporan {
+  height: 100%;
+  padding: 10px;
+}
+.container-mainLaporan h2 {
+  text-align: center;
+}
+@media (max-width: 800px) {
+  .container-Laporan {
+    display: grid;
+    grid-template-columns: 61px 85%;
+    gap: 0px 0px;
+    grid-template-areas: "sidebar-LaporanMini MainLaporan";
+  }
+
+  .MainLaporan {
+    grid-area: MainLaporan;
     background-color: #eaeaea;
   }
-  .item__laporan h2,
-  p {
-    color: black;
+
+  .sidebar-LaporanMini {
+    grid-area: sidebar-LaporanMini;
+    height: 100vh;
+    width: 60px;
+    display: flex;
+    justify-content: center;
   }
-  .sidebar__Laporan {
-    grid-area: sidebar;
-    height: 100px;
-    background-color: #eaeaea;
-    margin-top: 10px;
+  .sidebar-LaporanMini > .MuiSvgIcon-root {
+    text-align: center;
   }
-  .main__Laporan {
-    grid-area: main;
-    padding: 5px;
-    width: 54%;
-    align-self: center;
-  }
-  .main_laporan h2 {
-    font-size: 15px !important;
+  .MuiDrawer-paper {
+    top: 70px !important;
   }
 }

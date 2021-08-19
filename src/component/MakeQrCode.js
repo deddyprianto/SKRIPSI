@@ -56,9 +56,9 @@ function MakeQrCode() {
 
       {/* make UI qr code */}
       <div className="text__judul">
-        <h1 data-aos="fade-down" className="text__nama">
+        <h2 data-aos="fade-down" className="text__nama">
           Buat Nama lengkap dan hasilkan Qr Code Pegawai anda Di sini
-        </h1>
+        </h2>
       </div>
       <Grid container xs={12} justify="center" alignItems="center">
         <img

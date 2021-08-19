@@ -1,0 +1,16 @@
+.container-Drawer {
+  width: 200px;
+}
+.rekap {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.pdf {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

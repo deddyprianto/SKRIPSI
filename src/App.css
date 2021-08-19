@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=MuseoModerno&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -12,11 +13,14 @@ h1 {
   -webkit-text-fill-color: transparent;
   font-family: "Kalam", cursive;
 }
+h2 {
+  font-family: "Nunito", sans-serif;
+}
 h3 {
   font-family: "Montserrat Alternates", sans-serif;
 }
 p {
-  font-family: "MuseoModerno", cursive;
+  font-family: "Nunito", sans-serif;
 }
 .text__danger {
   text-align: center;
@@ -47,4 +51,3 @@ p {
 .footer {
   grid-area: "footer";
 }
-

@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <div className="footer">
-      <h4>All Right Reserved 2021 @Deddy</h4>
+      <h4>All Right Reserved 2021 @SDSMelbourne</h4>
     </div>
   );
 }

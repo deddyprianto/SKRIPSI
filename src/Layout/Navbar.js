@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import useWindowSize from "../CustomHook/useWindowSize";
+import MenuIcon from "@material-ui/icons/Menu";
 
 function Navbar() {
   const [value, setValue] = useState(0);
@@ -11,7 +12,9 @@ function Navbar() {
     <div className="navbar">
       <div className="nav__title">Absensi Guru SDS MelBourne</div>
       {width <= 800 ? (
-        <div className="nav__title">2021</div>
+        <div className="nav__title">
+          <h2 style={{ fontSize: "15px" }}>2021</h2>
+        </div>
       ) : (
         <ul className="list__link">
           <Link to="/">
