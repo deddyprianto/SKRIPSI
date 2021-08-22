@@ -59,6 +59,7 @@
   cursor: pointer;
   border: none;
   margin-top: 10px;
+  background-color: #64d0ff;
 }
 .content__hasil input {
   color: white;

@@ -13,6 +13,7 @@ import Container from "@material-ui/core/Container";
 function MakeQrCode() {
   const [inputanqrcode, setInputanqrcode] = useState("");
   const [showwarn, setShowwarn] = useState(false);
+
   useEffect(() => {
     AOS.init({ duration: 2000 });
   }, []);
@@ -57,7 +58,7 @@ function MakeQrCode() {
       {/* make UI qr code */}
       <div className="text__judul">
         <h2 data-aos="fade-down" className="text__nama">
-          Buat Nama lengkap dan hasilkan Qr Code Pegawai anda Di sini
+          Buat QrCODE Anda di sini
         </h2>
       </div>
       <Grid container xs={12} justify="center" alignItems="center">
@@ -85,7 +86,9 @@ function MakeQrCode() {
           {inputanqrcode.length > 10 ? (
             <div className="gambar__qrcodeRender">
               {showwarn && (
-                <p className="text__pSpecial">Klik gambar untuk mendownload</p>
+                <p className="text__pSpecial">
+                  Klik gambar untuk mendownload QrCODE
+                </p>
               )}
               <a href={inputanqrcode} download>
                 <img

@@ -11,6 +11,7 @@
 .MainLaporan {
   grid-area: MainLaporan;
   background-color: #eaeaea;
+  padding: 15px;
 }
 
 .SideBarLaporan {
@@ -32,37 +33,14 @@
 }
 
 /* main Laporan */
-.container-mainLaporan {
-  height: 100%;
-  padding: 10px;
-}
-.container-mainLaporan h2 {
-  text-align: center;
-}
+
 @media (max-width: 800px) {
   .container-Laporan {
-    display: grid;
-    grid-template-columns: 61px 85%;
-    gap: 0px 0px;
-    grid-template-areas: "sidebar-LaporanMini MainLaporan";
-  }
-
-  .MainLaporan {
-    grid-area: MainLaporan;
-    background-color: #eaeaea;
-  }
-
-  .sidebar-LaporanMini {
-    grid-area: sidebar-LaporanMini;
-    height: 100vh;
-    width: 60px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
   }
-  .sidebar-LaporanMini > .MuiSvgIcon-root {
-    text-align: center;
-  }
-  .MuiDrawer-paper {
-    top: 70px !important;
+  .MainLaporan {
+    background-color: #eaeaea;
+    padding: 10px;
   }
 }

@@ -7,6 +7,7 @@ import useWindowSize from "./CustomHook/useWindowSize";
 import BawahNavigation from "./Layout/BawahNavigation";
 import Divider from "@material-ui/core/Divider";
 import { stateValueProvider } from "./StateProvider";
+import HasilkanPDF from "./component/DataLaporan/HasilkanPDF";
 
 const Main = lazy(() => import("./component/Main"));
 const MakeQrCode = lazy(() => import("./component/MakeQrCode"));

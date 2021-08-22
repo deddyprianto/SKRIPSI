@@ -10,6 +10,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import Modal from "@material-ui/core/Modal";
 
 function ScanQrCode() {
   const [resscancamera, setResscancamera] = useState("");
@@ -18,18 +19,18 @@ function ScanQrCode() {
   const [sakit, setSakit] = useState(false);
   const [izin, setIzin] = useState(false);
   const [alpha, setAlpha] = useState(false);
-
+  const [modal, setModal] = useState(false);
   useEffect(() => {
     Aos.init({
       duration: "2000",
     });
   }, []);
+
   const play = (e) => {
     e.preventDefault();
     alert(
       "Terimakasih, tombol ini di berguna untuk menjaga aplikasi agar akurat dalam pemindaian data dari Qrcode"
     );
-
     const dataImg = document.getElementById("img");
     dataImg.addEventListener("change", () => {
       const fileImg = dataImg.files[0];
@@ -57,7 +58,9 @@ function ScanQrCode() {
   };
   const handleChange = (event) => {
     setValue(event.target.value);
-    console.log(event.target.value);
+    if (event.target.value === "Sakit") {
+      setModal(true);
+    }
   };
   return (
     <div className="container__ScanQrCode">
@@ -156,6 +159,14 @@ function ScanQrCode() {
           ></path>
         </svg>
       </div>
+      <Modal
+        open={modal}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {/* isi modal */}
+      </Modal>
     </div>
   );
 }
