@@ -304,12 +304,7 @@ function ScanQrCode() {
           <Button onClick={getLocation} variant="contained" color="secondary">
             Cek Lokasi anda saat ini
           </Button>
-          {location && (
-            <div>
-              <h1>{latitude}</h1>
-              <h2>{longitude}</h2>
-            </div>
-          )}
+          {latitude ? <h1>Ini melbourne</h1> : <h1>ini bukan melbourne</h1>}
         </DialogContent>
       </Dialog>
     </div>
