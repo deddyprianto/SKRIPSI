@@ -8,7 +8,11 @@
   background-color: rgb(21, 32, 43);
 }
 .svg__scanQrcode {
-  margin-top: -250px;
+  margin-top: -197px;
+}
+
+.MuiFormControlLabel-root {
+  color: #696969 !important;
 }
 .content__qrcode {
   width: 100% !important;
@@ -29,8 +33,8 @@
   font-size: 50px;
 }
 .content__qrcode img {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
 }
 .btn__scan {
   width: 500px !important;
@@ -41,7 +45,7 @@
   border: none;
   outline: none;
   cursor: pointer;
-  margin: 50px;
+  margin: 10px;
 }
 .content__hasil {
   margin: 5px;
@@ -59,17 +63,38 @@
   cursor: pointer;
   border: none;
   margin-top: 10px;
-  background-color: #64d0ff;
+  background-color: #1a652c;
+  color: white;
 }
 .content__hasil input {
-  color: white;
+  color: #f52929;
 }
 .content__hasil p {
   margin-top: 40px;
-  color: white;
+  color: #908989;
   text-align: center;
+  font-size: 39px;
+}
+.card_custom {
+  width: 33%;
+  background-color: #d8d8d8;
+  border-radius: 20px;
+}
+.form_margin {
+  margin-top: 20px !important;
 }
 @media (max-width: 576px) {
+  .content__hasil p {
+    font-size: 28px;
+  }
+  .form_margin {
+    margin-top: 20px !important;
+  }
+  .card_custom {
+    width: 90%;
+    background-color: #d8d8d8;
+    border-radius: 20px;
+  }
   .content__qrcode {
     justify-content: flex-start;
   }

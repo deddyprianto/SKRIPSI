@@ -34,7 +34,7 @@ function MakeQrCode() {
         <div className="textContent__make">
           <h1 data-aos="zoom-in">Make your QRCode in here</h1>
           <p data-aos-delay="1000" data-aos="zoom-out-up">
-            Buat QRCode Lengkap anda di sini
+            Create your Complete QRCode here
           </p>
           <img
             data-aos-delay="2000"
@@ -58,7 +58,7 @@ function MakeQrCode() {
       {/* make UI qr code */}
       <div className="text__judul">
         <h2 data-aos="fade-down" className="text__nama">
-          Buat QrCODE Anda di sini
+          Make your QRCode In Here
         </h2>
       </div>
       <Grid container xs={12} justify="center" alignItems="center">
@@ -75,31 +75,31 @@ function MakeQrCode() {
               id="standard-basic"
               onChange={(e) => setInputanqrcode(e.target.value)}
               value={inputanqrcode}
-              label="Masukkan nama Guru"
+              label="Enter Teacher's name"
             />
           </div>
           <div className="btn__qrcode">
             <Button variant="contained" onClick={handelQrCode} color="primary">
-              Buat QRCode
+              Make QRCode
             </Button>
           </div>
           {inputanqrcode.length > 10 ? (
             <div className="gambar__qrcodeRender">
               {showwarn && (
                 <p className="text__pSpecial">
-                  Klik gambar untuk mendownload QrCODE
+                  Click the image to download QrCODE
                 </p>
               )}
               <a href={inputanqrcode} download>
                 <img
                   src={inputanqrcode}
-                  alt="sudah pas, klik tombol dan buat qrcode sekarang"
+                  alt="it's right, click the button and create a qrcode now"
                 />
               </a>
             </div>
           ) : (
             <p style={{ marginTop: "50px", textAlign: "center" }}>
-              Haloo, mari membuat semua nya mudah
+              Hello, let's make things easy
             </p>
           )}
         </div>

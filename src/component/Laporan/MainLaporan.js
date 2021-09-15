@@ -6,11 +6,12 @@ import Snackbar from "@material-ui/core/Snackbar";
 import { STATE_SNACKBAR } from "../../const/stateCondition";
 import { IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import { Grid } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 import SideBarLaporan from "./SideBarLaporan";
 import "./LaporanScreen.css";
 import TableData from "../DataLaporan/TableData";
 import HasilkanPDF from "../DataLaporan/HasilkanPDF";
+import TbCard from "./TbCard";
 
 const MainLaporan = () => {
   const [{ login }, dispatch] = stateValueProvider();
@@ -20,9 +21,26 @@ const MainLaporan = () => {
   const handleClose = (e) => {
     dispatch({ type: STATE_SNACKBAR, payload: false });
   };
+
   return (
     <div>
+      <h2
+        style={{
+          textAlign: "center",
+          color: "gray",
+          textTransform: "uppercase",
+          marginBottom: 20,
+        }}
+      >
+        Dasboard Guru SD Swasta Melbourne
+      </h2>
+      <Divider />
       <TableData />
+      <HasilkanPDF />
+      <div className="main-Laporan-kedua">
+        <h2 style={{ color: "gray" }}>Guru dan Pegawai SD SWASTA MelBourne</h2>
+        <TbCard />
+      </div>
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
@@ -48,5 +66,4 @@ const MainLaporan = () => {
     </div>
   );
 };
-
 export default MainLaporan;

@@ -17,12 +17,27 @@
   height: 100px;
   display: flex;
   align-items: center;
+}
+.navbar__Logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav__title h2 {
+  font-weight: bold;
+  font-family: "Kalam", cursive;
   font-size: 21px;
   background: linear-gradient(to left, #c8c8c8, #60b9dd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: "Kalam", cursive;
+}
+.navbar__Logo h2 {
   font-weight: bold;
+  font-family: "Kalam", cursive;
+  font-size: 21px;
+  background: linear-gradient(to left, #c8c8c8, #60b9dd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .list__link {
   display: flex;

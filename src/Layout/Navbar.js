@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logosd from "../img/logoSD.png";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import useWindowSize from "../CustomHook/useWindowSize";
@@ -10,10 +11,13 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="nav__title">Absensi Guru SDS MelBourne</div>
+      <div className="navbar__Logo">
+        <img src={logosd} width={50} height={50} alt="" />
+        <h2>Absensi Guru SDS MelBourne</h2>
+      </div>
       {width <= 800 ? (
         <div className="nav__title">
-          <h2 style={{ fontSize: "15px" }}>2021</h2>
+          <h2>2021</h2>
         </div>
       ) : (
         <ul className="list__link">
@@ -21,7 +25,7 @@ function Navbar() {
             <li>Home</li>
           </Link>
           <Link to="makeqrcode">
-            <li>Buat QRCode</li>
+            <li>Make QRCode</li>
           </Link>
           <Link to="scanqrcode">
             <li>Scan QRCode</li>

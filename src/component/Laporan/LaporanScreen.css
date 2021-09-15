@@ -33,7 +33,12 @@
 }
 
 /* main Laporan */
-
+.main-Laporan-kedua {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
 @media (max-width: 800px) {
   .container-Laporan {
     display: flex;

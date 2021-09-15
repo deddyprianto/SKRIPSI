@@ -33,11 +33,12 @@
   margin-top: -300px;
 }
 .fitur {
-  margin-top: 15em;
+  margin-top: 10em;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 5rem;
 }
 .fitur h1 {
   font-size: 40px;

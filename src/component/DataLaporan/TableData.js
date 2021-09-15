@@ -27,13 +27,16 @@ const TableData = () => {
     },
     table: {
       minWidth: 650,
-      margin: 10
+      margin: 10,
     },
   }));
   const classes = useStyles();
   return (
-    <div>
-      <h2 style={{textAlign: "center"}}>Data Laporan Guru SD Swasta Melbourne</h2>
+    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+      <h2 style={{ textAlign: "center" }}>
+        Data Laporan Absensi Guru SD Swasta Melbourne
+      </h2>
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
