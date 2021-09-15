@@ -4,8 +4,6 @@ import { stateValueProvider } from "../StateProvider";
 import { STATE_SIMPAN_LOKASI } from "../const/stateCondition";
 class Location extends React.Component {
   render() {
-    const [{ lokasiSekarang }, dispatch] = stateValueProvider();
-
     return !this.props.isGeolocationAvailable ? (
       <div>Your browser does not support Geolocation</div>
     ) : !this.props.isGeolocationEnabled ? (
@@ -16,10 +14,6 @@ class Location extends React.Component {
           <tr>
             <td>latitude</td>
             <td>{this.props.coords.latitude}</td>
-            {dispatch({
-              type: STATE_SIMPAN_LOKASI,
-              payload: this.props.coords.latitude,
-            })}
           </tr>
           <tr>
             <td>longitude</td>
