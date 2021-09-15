@@ -25,10 +25,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Location from "./Location";
 
 function ScanQrCode() {
-  const [{ modal, modalLocation ,lokasiSekarang}, dispatch] = stateValueProvider();
+  const [{ modal, modalLocation, lokasiSekarang }, dispatch] =
+    stateValueProvider();
   const [resscancamera, setResscancamera] = useState("");
   const [value, setValue] = useState("Status");
   const [hadir, setHadir] = useState(false);
@@ -37,6 +37,8 @@ function ScanQrCode() {
   const [alpha, setAlpha] = useState(false);
   const [buttonSakit, setButtonSakit] = useState(true);
   const [location, setLocation] = useState(false);
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
   useEffect(() => {
     Aos.init({
       duration: "2000",
@@ -105,7 +107,39 @@ function ScanQrCode() {
       setAlpha(true);
     }
   };
-  const getLocation = () => setLocation(true);
+  const getLocation = () => {
+    setLocation(true);
+    if (navigator.geolocation) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then(function (result) {
+          if (result.state === "granted") {
+            console.log(result.state);
+            //If granted then you can directly call your function here
+            navigator.geolocation.getCurrentPosition((pos) => {
+              setLatitude(pos.coords.latitude);
+              setLongitude(pos.coords.longitude);
+            });
+          } else if (result.state === "prompt") {
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                setLatitude(pos.coords.latitude);
+                setLongitude(pos.coords.longitude);
+              },
+              errors,
+              options
+            );
+          } else if (result.state === "denied") {
+            alert("access di tolak");
+          }
+          result.onchange = function () {
+            console.log(result.state);
+          };
+        });
+    } else {
+      alert("Sorry Not available!");
+    }
+  };
 
   return (
     <div className="container__ScanQrCode">
@@ -270,7 +304,12 @@ function ScanQrCode() {
           <Button onClick={getLocation} variant="contained" color="secondary">
             Cek Lokasi anda saat ini
           </Button>
-          {location && <Location />}
+          {location && (
+            <div>
+              <h1>{latitude}</h1>
+              <h2>{longitude}</h2>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>
