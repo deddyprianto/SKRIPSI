@@ -18,7 +18,7 @@
   width: 100% !important;
   height: 700px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
 }
@@ -30,7 +30,7 @@
 }
 
 .content__qrcode h1 {
-  font-size: 50px;
+  font-size: 40px;
 }
 .content__qrcode img {
   width: 100px;
@@ -73,7 +73,7 @@
   margin-top: 40px;
   color: #908989;
   text-align: center;
-  font-size: 39px;
+  font-size: 15px;
 }
 .card_custom {
   width: 33%;

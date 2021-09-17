@@ -32,8 +32,17 @@ const TableData = () => {
   }));
   const classes = useStyles();
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-      <h2 style={{ textAlign: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        marginTop: 30,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <h2 style={{ textAlign: "center", color: "gray" }}>
         Data Laporan Absensi Guru SD Swasta Melbourne
       </h2>
 

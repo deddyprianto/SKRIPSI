@@ -154,13 +154,12 @@ const TbCard = () => {
   ];
 
   return (
-    <div style={{ flex: 2, alignSelf: "flex-start" }}>
+    <div>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Nama Lengkap</TableCell>
-
               <TableCell align="right">Jabatan</TableCell>
               <TableCell align="right">Agama</TableCell>
               <TableCell align="right">Jurusan Mengajar</TableCell>
@@ -171,7 +170,7 @@ const TbCard = () => {
             {dataGuru.map((data, i) => (
               <TableRow key={i}>
                 <TableCell component="th" scope="row">
-                  {data.namaGuru}
+                  {data.nama}
                 </TableCell>
                 <TableCell align="right">{data.jabatan}</TableCell>
                 <TableCell align="right">{data.agama}</TableCell>

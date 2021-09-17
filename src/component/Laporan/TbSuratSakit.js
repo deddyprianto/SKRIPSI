@@ -7,7 +7,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-const TbCard = () => {
+const TbSuratSakit = () => {
   const useStyles = makeStyles((theme) => ({
     root: {
       display: "flex",
@@ -51,7 +51,16 @@ const TbCard = () => {
   ];
 
   return (
-    <div>
+    <div
+      style={{
+        marginTop: 30,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <h2 style={{ color: "gray" }}>Bukti Surat Sakit yang masuk</h2>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -85,4 +94,4 @@ const TbCard = () => {
   );
 };
 
-export default TbCard;
+export default TbSuratSakit;

@@ -5,7 +5,6 @@
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas: "SideBarLaporan MainLaporan";
-  height: 100vh;
 }
 
 .MainLaporan {
@@ -38,6 +37,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  flex-direction: column;
 }
 @media (max-width: 800px) {
   .container-Laporan {

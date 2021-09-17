@@ -7,6 +7,10 @@ import {
   STATE_SAKIT,
   STATE_MODAL_LOCATION,
   STATE_SIMPAN_LOKASI,
+  STATE_MODAL_PIKET,
+  STATE_PIKET,
+  STATE_MASUK_BIASA,
+  STATE_BUKAN_GKELAS,
 } from "../const/stateCondition";
 
 export const initial = {
@@ -17,8 +21,10 @@ export const initial = {
   modalLogin: false,
   nama: "",
   statusSakit: "",
-  modalLocation: false,
-  lokasiSekarang: "",
+  modalPiket: false,
+  piket: "",
+  masukBiasa: "",
+  bukanGKelas: "",
 };
 export const reduce = (state, action) => {
   switch (action.type) {
@@ -34,10 +40,14 @@ export const reduce = (state, action) => {
       return { ...state, modal: action.payload };
     case STATE_MODAL_LOGIN:
       return { ...state, modalLogin: action.payload };
-    case STATE_MODAL_LOCATION:
-      return { ...state, modalLocation: action.payload };
-    case STATE_SIMPAN_LOKASI:
-      return { ...state, lokasiSekarang: action.payload };
+    case STATE_MODAL_PIKET:
+      return { ...state, modalPiket: action.payload };
+    case STATE_PIKET:
+      return { ...state, piket: action.payload };
+    case STATE_MASUK_BIASA:
+      return { ...state, masukBiasa: action.payload };
+    case STATE_BUKAN_GKELAS:
+      return { ...state, bukanGKelas: action.payload };
     default:
       return state;
   }

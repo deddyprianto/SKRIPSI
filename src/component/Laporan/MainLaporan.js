@@ -12,7 +12,7 @@ import "./LaporanScreen.css";
 import TableData from "../DataLaporan/TableData";
 import HasilkanPDF from "../DataLaporan/HasilkanPDF";
 import TbCard from "./TbCard";
-
+import TbSuratSakit from "./TbSuratSakit";
 const MainLaporan = () => {
   const [{ login }, dispatch] = stateValueProvider();
   const { user } = login;
@@ -27,7 +27,6 @@ const MainLaporan = () => {
       <h2
         style={{
           textAlign: "center",
-          color: "gray",
           textTransform: "uppercase",
           marginBottom: 20,
         }}
@@ -38,9 +37,12 @@ const MainLaporan = () => {
       <TableData />
       <HasilkanPDF />
       <div className="main-Laporan-kedua">
-        <h2 style={{ color: "gray" }}>Guru dan Pegawai SD SWASTA MelBourne</h2>
+        <h2 style={{ color: "gray" }}>
+          Table Guru dan Pegawai SD SWASTA MelBourne
+        </h2>
         <TbCard />
       </div>
+      <TbSuratSakit />
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",

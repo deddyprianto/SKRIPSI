@@ -17,7 +17,8 @@ import {
   TableBody,
   DataTableCell,
 } from "@david.kucsai/react-pdf-table";
-
+import DeleteIcon from "@material-ui/icons/Delete";
+import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 const HasilkanPDF = () => {
   const styles = StyleSheet.create({
     textLinkPDF: {
@@ -99,7 +100,12 @@ const HasilkanPDF = () => {
         marginBottom: 22,
       }}
     >
-      <Button variant="contained" color="secondary" style={{ marginTop: 30 }}>
+      <Button
+        startIcon={<PictureAsPdfIcon />}
+        variant="contained"
+        color="secondary"
+        style={{ marginTop: 30 }}
+      >
         <PDFDownloadLink
           style={styles.textLinkPDF}
           document={<MyDocument />}
@@ -109,6 +115,14 @@ const HasilkanPDF = () => {
             loading ? "Loading document..." : "Cetak Laporan PDF!"
           }
         </PDFDownloadLink>
+      </Button>
+      <Button
+        variant="contained"
+        style={{ marginTop: 30 }}
+        color="secondary"
+        startIcon={<DeleteIcon />}
+      >
+        Hapus Data
       </Button>
     </div>
   );
