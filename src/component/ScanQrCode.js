@@ -59,7 +59,8 @@ function ScanQrCode() {
   const [yapiket, setYapiket] = useState(false);
   const [tidakpiket, setTidakpiket] = useState(false);
   const [tidakgurukelas, setTidakgurukelas] = useState(false);
-
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
   useLayoutEffect(() => {
     dispatch({ type: STATE_MODAL_PIKET, payload: true });
   }, []);
@@ -152,7 +153,8 @@ function ScanQrCode() {
             onClick={() => {
               navigator.geolocation.getCurrentPosition(
                 (position) => {
-                  alert(position.coords.latitude, position.coords.longitude);
+                  setLatitude(position.coords.latitude);
+                  setLongitude(position.coords.longitude);
                 },
                 (error) => alert(error.message),
                 { enableHighAccuracy: true, timeout: 5000 }
@@ -175,7 +177,8 @@ function ScanQrCode() {
           >
             Please,Press THIS button before starting
           </button>
-
+          <h1>Ltitiude = {latitude}</h1>
+          <h2>Longtiidude = {longitude}</h2>
           <input
             data-aos-delay="2000"
             data-aos="zoom-out"
