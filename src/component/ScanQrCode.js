@@ -152,7 +152,7 @@ function ScanQrCode() {
             onClick={() => {
               navigator.geolocation.getCurrentPosition(
                 (position) => {
-                  alert(position.coords.latitude);
+                  alert(position.coords.latitude, position.coords.longitude);
                 },
                 (error) => alert(error.message),
                 { enableHighAccuracy: true, timeout: 5000 }
