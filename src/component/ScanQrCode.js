@@ -1,5 +1,5 @@
 require("file-loader?name=[name].[ext]!../../node_modules/qr-scanner/qr-scanner-worker.min.js");
-import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import QrScanner from "qr-scanner";
 import codescanner from "../img/codescanner.png";
 import "./ScanQrCode.css";
@@ -21,6 +21,7 @@ import {
   STATE_PIKET,
   STATE_MASUK_BIASA,
   STATE_BUKAN_GKELAS,
+  MODAL_LOKASI,
 } from "../const/stateCondition";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -42,10 +43,23 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from "@material-ui/core";
+import DapatkanLokasi from "./DapatkanLokasi";
+import { CircularProgress } from "@material-ui/core";
+import { PersonPinCircle } from "@material-ui/icons";
 
 function ScanQrCode() {
   const [
-    { modal, modalLocation, modalPiket, piket, masukBiasa, bukanGKelas },
+    {
+      modal,
+      modalLocation,
+      modalPiket,
+      piket,
+      masukBiasa,
+      bukanGKelas,
+      modalLokasi,
+      lihatKesalahanLokasi,
+      tampilButtonPiket,
+    },
     dispatch,
   ] = stateValueProvider();
   const [resscancamera, setResscancamera] = useState("");
@@ -61,14 +75,29 @@ function ScanQrCode() {
   const [tidakgurukelas, setTidakgurukelas] = useState(false);
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  useLayoutEffect(() => {
-    dispatch({ type: STATE_MODAL_PIKET, payload: true });
-  }, []);
+  const [loadingLokasi, setLoadingLokasi] = useState(true);
+  const [lihatFormAbsensi, setLihatFormAbsensi] = useState(false);
+
   useEffect(() => {
     Aos.init({
       duration: "2000",
     });
   }, []);
+
+  useEffect(() => {
+    let loadingData;
+    if (!modalLokasi) {
+      setLoadingLokasi(true);
+    } else {
+      loadingData = setTimeout(() => {
+        setLoadingLokasi(false);
+      }, 4000);
+    }
+    return () => {
+      clearTimeout(loadingData);
+    };
+  }, [modalLokasi]);
+
   const play = (e) => {
     e.preventDefault();
     alert(
@@ -143,50 +172,74 @@ function ScanQrCode() {
     },
   }));
   const classes = useStyles();
+  // perlihatkan lokasi
+  const lacakLokasiGuru = () => {
+    dispatch({ type: MODAL_LOKASI, payload: true });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      (error) => alert(error.message),
+      { enableHighAccuracy: true, timeout: 5000 }
+    );
+  };
+  const cekApakahPiketApaTidak = () => {
+    dispatch({ type: STATE_MODAL_PIKET, payload: true });
+  };
 
   return (
     <div className="container__ScanQrCode">
       <div className="scanQrCode">
         <div className="content__qrcode">
-          <h1 data-aos="zoom-in">Scan QRCode anda di sini</h1>
+          <h1 data-aos="zoom-in">
+            Scan QRCode anda di sini,Untuk Proses Pengabsenan
+          </h1>
           <Button
-            onClick={() => {
-              navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  setLatitude(position.coords.latitude);
-                  setLongitude(position.coords.longitude);
-                },
-                (error) => alert(error.message),
-                { enableHighAccuracy: true, timeout: 5000 }
-              );
-            }}
+            startIcon={<PersonPinCircle />}
+            variant="contained"
+            onClick={lacakLokasiGuru}
+            color="secondary"
+            style={{ margin: 10 }}
           >
-            Press Me To Get Location
+            Cek Lokasi Anda
           </Button>
-          <img
-            data-aos-delay="1000"
-            data-aos="zoom-out-up"
-            src={codescanner}
-            alt=""
-          />
-          <button
-            data-aos-delay="2000"
-            data-aos="zoom-out"
-            className="btn__scan"
-            onClick={play}
-          >
-            Please,Press THIS button before starting
-          </button>
-          <h1>Ltitiude = {latitude}</h1>
-          <h2>Longtiidude = {longitude}</h2>
-          <input
-            data-aos-delay="2000"
-            data-aos="zoom-out"
-            type="file"
-            id="img"
-            placeholder="Upload QRCODE"
-            style={{ color: "white", marginBottom: 50 }}
-          />
+          {tampilButtonPiket && (
+            <Button
+              style={{ margin: 10 }}
+              color="primary"
+              variant="contained"
+              onClick={cekApakahPiketApaTidak}
+            >
+              Apakah Anda Piket ?
+            </Button>
+          )}
+          {lihatFormAbsensi && (
+            <>
+              <img
+                data-aos-delay="1000"
+                data-aos="zoom-out-up"
+                src={codescanner}
+                alt=""
+              />
+              <button
+                data-aos-delay="2000"
+                data-aos="zoom-out"
+                className="btn__scan"
+                onClick={play}
+              >
+                Please,Press THIS button before starting
+              </button>
+              <input
+                data-aos-delay="2000"
+                data-aos="zoom-out"
+                type="file"
+                id="img"
+                placeholder="Upload QRCODE"
+                style={{ color: "white", marginBottom: 50 }}
+              />
+            </>
+          )}
           <div
             className="card_custom"
             data-aos="fade-down"
@@ -402,6 +455,7 @@ function ScanQrCode() {
                   disableRipple
                   onChange={(e) => {
                     dispatch({ type: STATE_MODAL_PIKET, payload: false });
+                    setLihatFormAbsensi(true);
                     setYapiket(true);
                     dispatch({ type: STATE_PIKET, payload: e.target.value });
                   }}
@@ -426,6 +480,7 @@ function ScanQrCode() {
                     console.log(e.target.value);
                     dispatch({ type: STATE_MODAL_PIKET, payload: false });
                     setTidakpiket(true);
+                    setLihatFormAbsensi(true);
                     dispatch({
                       type: STATE_MASUK_BIASA,
                       payload: e.target.value,
@@ -451,6 +506,7 @@ function ScanQrCode() {
                   onChange={(e) => {
                     console.log(e.target.value);
                     dispatch({ type: STATE_MODAL_PIKET, payload: false });
+                    setLihatFormAbsensi(true);
                     dispatch({
                       type: STATE_BUKAN_GKELAS,
                       payload: e.target.value,
@@ -473,6 +529,38 @@ function ScanQrCode() {
             onClick={() =>
               dispatch({ type: STATE_MODAL_PIKET, payload: false })
             }
+            color="primary"
+          >
+            Tutup
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* modal cek lokasi */}
+      <Dialog
+        open={modalLokasi}
+        onClose={() => dispatch({ type: MODAL_LOKASI, payload: false })}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Mengecek Lokasi Anda...
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {loadingLokasi ? (
+              <CircularProgress
+                style={{ textAlign: "center" }}
+                color="secondary"
+              />
+            ) : (
+              <DapatkanLokasi lat={latitude} long={longitude} />
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => dispatch({ type: MODAL_LOKASI, payload: false })}
             color="primary"
           >
             Tutup

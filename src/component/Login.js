@@ -107,7 +107,7 @@ function Login() {
                 alignItems: "center",
               }}
             >
-              <p style={{ color: "gray" }}>Haloo Operator Sekolah</p>
+              <p style={{ color: "gray" }}>Hi, Operator Sekolah</p>
             </div>
           ) : (
             <p style={{ color: "red", fontStyle: "italic" }}>

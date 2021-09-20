@@ -103,6 +103,7 @@
   }
   .content__qrcode h1 {
     font-size: 20px;
+    text-align: center;
   }
   .content__qrcode img {
     width: 50px;
