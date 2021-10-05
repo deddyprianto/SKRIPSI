@@ -32,12 +32,32 @@
 }
 
 /* main Laporan */
-.main-Laporan-kedua {
+.main-Laporan-guru {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 30px;
   flex-direction: column;
+}
+.main-Laporan-jadwal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  flex-direction: column;
+}
+.main-Laporan-mapel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  flex-direction: column;
+}
+.MuiButton-containedSecondary {
+  margin-right: 10px !important;
+}
+.MuiDivider-root {
+  margin-top: 30px !important;
 }
 @media (max-width: 800px) {
   .container-Laporan {

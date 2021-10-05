@@ -12,6 +12,8 @@ import {
   STATE_BUKAN_GKELAS,
   MODAL_LOKASI,
   TAMPIL_BUTTON_PIKET,
+  STATE_MAPEL,
+  STATE_WAKTU_MULAI,
 } from "../const/stateCondition";
 
 export const initial = {
@@ -28,6 +30,8 @@ export const initial = {
   bukanGKelas: "",
   modalLokasi: false,
   tampilButtonPiket: false,
+  mapelSet: "",
+  waktuMulaiSet: "",
 };
 export const reduce = (state, action) => {
   switch (action.type) {
@@ -55,6 +59,11 @@ export const reduce = (state, action) => {
       return { ...state, modalLokasi: action.payload };
     case TAMPIL_BUTTON_PIKET:
       return { ...state, tampilButtonPiket: action.payload };
+    case STATE_MAPEL:
+      return { ...state, mapelSet: action.payload };
+    case STATE_WAKTU_MULAI:
+      return { ...state, waktuMulaiSet: action.payload };
+
     default:
       return state;
   }

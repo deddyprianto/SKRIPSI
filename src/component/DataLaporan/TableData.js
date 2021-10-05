@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -8,8 +8,15 @@ import TableRow from "@material-ui/core/TableRow";
 import "./TableData.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import db from "../../firebase";
 
 const TableData = () => {
+  const [hasil, setHasil] = useState([]);
+  useEffect(() => {
+    db.collection("guru").onSnapshot((snapshot) => {
+      setHasil(snapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
   const useStyles = makeStyles((theme) => ({
     root: {
       display: "flex",
@@ -31,42 +38,46 @@ const TableData = () => {
     },
   }));
   const classes = useStyles();
+
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        marginTop: 30,
-        justifyContent: "center",
-        alignItems: "center",
+        marginTop: 20,
+        marginBottom: 20,
       }}
     >
       <h2 style={{ textAlign: "center", color: "gray" }}>
-        Data Laporan Absensi Guru SD Swasta Melbourne
+        Data Rekap Laporan Absensi Guru SD Swasta Melbourne
       </h2>
 
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Nama Guru SD Swasta MelBourne</TableCell>
-              <TableCell align="right">Hadir</TableCell>
-              <TableCell align="right">Sakit</TableCell>
-              <TableCell align="right">Izin</TableCell>
-              <TableCell align="right">Alpha</TableCell>
+              <TableCell align="right">Nama</TableCell>
+              <TableCell align="right">Jam</TableCell>
+              <TableCell align="right">Piket</TableCell>
+              <TableCell align="right">Tidak Piket</TableCell>
+              <TableCell align="right">Tidak Guru Kelas</TableCell>
+              <TableCell align="right">Mata Pelajaran</TableCell>
+              <TableCell align="right">Waktu Mulai</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                Deddy Prianto
-              </TableCell>
-              <TableCell align="right">Hadir</TableCell>
-              <TableCell align="right">-</TableCell>
-              <TableCell align="right">-</TableCell>
-              <TableCell align="right">-</TableCell>
-            </TableRow>
+            {hasil.map((data, i) => (
+              <TableRow key={i}>
+                <TableCell component="th" scope="row">
+                  {data.name}
+                </TableCell>
+                <TableCell align="right">{data.jam}</TableCell>
+                <TableCell align="right">{data.status}</TableCell>
+                <TableCell align="right">{data.piket}</TableCell>
+                <TableCell align="right">{data.tidakpiket}</TableCell>
+                <TableCell align="right">{data.tidakgurukelas}</TableCell>
+                <TableCell align="right">{data.mapel}</TableCell>
+                <TableCell align="right">{data.waktumulai}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

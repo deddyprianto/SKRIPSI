@@ -30,7 +30,7 @@ function App() {
                 alignItems: "center",
               }}
             >
-              <h1>Page Is Loading, Please wait...</h1>
+              <h1>Halaman sedang dimuat, Silahkan Tunggu...</h1>
             </div>
           }
         >

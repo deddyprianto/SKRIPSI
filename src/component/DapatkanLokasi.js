@@ -8,14 +8,19 @@ import {
 } from "../const/stateCondition";
 
 const DapatkanLokasi = ({ lat, long }) => {
+  console.log(lat);
+  console.log(long);
   const [{ tampilButtonPiket }, dispatch] = stateValueProvider();
   const lanjutKePengisianAbsen = () => {
     dispatch({ type: MODAL_LOKASI, payload: false });
     dispatch({ type: TAMPIL_BUTTON_PIKET, payload: true });
   };
+// lokasi sekolah
+// 98.6710016,3.5913728
+
   return (
     <div style={{ width: "100%" }}>
-      {lat === 3.5991388 && long === 98.5933405 ? (
+      {lat === 3.5913728 && long === 98.6710016 ? (
         <div
           style={{
             display: "flex",

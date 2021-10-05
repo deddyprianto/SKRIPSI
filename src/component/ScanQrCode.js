@@ -22,6 +22,8 @@ import {
   STATE_MASUK_BIASA,
   STATE_BUKAN_GKELAS,
   MODAL_LOKASI,
+  STATE_MAPEL,
+  STATE_WAKTU_MULAI,
 } from "../const/stateCondition";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -38,6 +40,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import ScheduleIcon from "@material-ui/icons/Schedule";
+import TextField from "@material-ui/core/TextField";
 import {
   Checkbox,
   ListItemSecondaryAction,
@@ -59,6 +62,8 @@ function ScanQrCode() {
       modalLokasi,
       lihatKesalahanLokasi,
       tampilButtonPiket,
+      mapelSet,
+      waktuMulaiSet,
     },
     dispatch,
   ] = stateValueProvider();
@@ -77,6 +82,8 @@ function ScanQrCode() {
   const [longitude, setLongitude] = useState("");
   const [loadingLokasi, setLoadingLokasi] = useState(true);
   const [lihatFormAbsensi, setLihatFormAbsensi] = useState(false);
+  const [mapel, setMapel] = useState("");
+  const [waktuMulai, setWaktuMulai] = useState("");
 
   useEffect(() => {
     Aos.init({
@@ -120,13 +127,15 @@ function ScanQrCode() {
   const tanggal = new Date();
   const hari = tanggal.toLocaleString();
   const saveData = () => {
-    const checkData = db.collection("dataabsen").add({
+    const checkData = db.collection("guru").add({
       name: resscancamera,
       jam: hari,
       status: value,
       piket: piket,
       tidakpiket: masukBiasa,
       tidakgurukelas: bukanGKelas,
+      mapel: mapel,
+      waktuMulai: waktuMulai,
     });
     if (checkData) {
       setPemberitahuanAbsen(true);
@@ -161,6 +170,7 @@ function ScanQrCode() {
       setAlpha(true);
     }
   };
+
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -187,6 +197,9 @@ function ScanQrCode() {
   const cekApakahPiketApaTidak = () => {
     dispatch({ type: STATE_MODAL_PIKET, payload: true });
   };
+
+  const today = new Date();
+  const time = today.getHours() + ":" + today.getMinutes();
 
   return (
     <div className="container__ScanQrCode">
@@ -228,7 +241,7 @@ function ScanQrCode() {
                 className="btn__scan"
                 onClick={play}
               >
-                Please,Press THIS button before starting
+                Harap Tekan Tombol ini sebelum mulai Proses Pengabsenan
               </button>
               <input
                 data-aos-delay="2000"
@@ -238,14 +251,47 @@ function ScanQrCode() {
                 placeholder="Upload QRCODE"
                 style={{ color: "white", marginBottom: 50 }}
               />
+              <div
+                data-aos-delay="2000"
+                data-aos="zoom-out"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: -41,
+                }}
+              >
+                <TextField
+                  id="outlined-basic"
+                  onChange={(e) => {
+                    setMapel(e.target.value);
+                    dispatch({ type: STATE_MAPEL, payload: e.target.value });
+                  }}
+                  label="Mata Pelajaran"
+                  variant="outlined"
+                  color="secondary"
+                  style={{ color: "white" }}
+                />
+                <TextField
+                  onChange={(e) => {
+                    setWaktuMulai(e.target.value);
+                    dispatch({
+                      type: STATE_WAKTU_MULAI,
+                      payload: e.target.value,
+                    });
+                  }}
+                  style={{ color: "white" }}
+                  id="outlined-basic"
+                  label="Jam Mulai belajar"
+                  variant="outlined"
+                  color="secondary"
+                />
+              </div>
             </>
           )}
-          <div
-            className="card_custom"
-            data-aos="fade-down"
-            data-aos-delay="3000"
-          >
-            {resscancamera && (
+          {resscancamera && (
+            <div className="card_custom" data-aos="fade-down">
               <div className="content__hasil">
                 <h3
                   style={{
@@ -254,7 +300,7 @@ function ScanQrCode() {
                     textAlign: "center",
                   }}
                 >
-                  QR Code Scan Results
+                  Hasil Scan QRCODE
                 </h3>
                 <hr />
                 <p style={{ fontWeight: "bold" }}>{resscancamera}</p>
@@ -263,10 +309,18 @@ function ScanQrCode() {
                   color="secondary"
                   className="form_margin"
                 >
-                  <FormLabel component="legend" style={{ color: "#696969" }}>
+                  <FormLabel
+                    component="legend"
+                    className="text__statusKehadiran"
+                  >
                     Attendance Status
                   </FormLabel>
-                  <RadioGroup aria-label="gender" name="gender1" value={value}>
+                  <RadioGroup
+                    aria-label="gender"
+                    name="gender1"
+                    value={value}
+                    className="form__inputBox"
+                  >
                     <FormControlLabel
                       control={
                         <Radio
@@ -326,8 +380,8 @@ function ScanQrCode() {
                   </Button>
                 )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="svg__scanQrcode">
@@ -384,7 +438,9 @@ function ScanQrCode() {
           >
             <ListItem button>
               <ListItemText primary="Nama" />
-              <ListItemSecondaryAction>{resscancamera}</ListItemSecondaryAction>
+              <ListItemSecondaryAction>
+                <p style={{ color: "gray", fontSize: 15 }}>{resscancamera}</p>
+              </ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
               <ListItemText primary="Status Kehadiran" />
@@ -392,31 +448,51 @@ function ScanQrCode() {
             </ListItem>
             <ListItem button>
               <ListItemText primary="Jam absen" />
-              <ListItemSecondaryAction>{hari}</ListItemSecondaryAction>
+              <ListItemSecondaryAction>
+                <p style={{ fontSize: 13, color: "gray" }}>{hari}</p>
+              </ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
               <ListItemText primary="Piket" />
               <ListItemSecondaryAction>
-                {piket === new Date().getHours().toString() ? (
-                  <p style={{ color: "green" }}>Tepat Waktu</p>
-                ) : (
-                  <p style={{ color: "red" }}>Terlambat</p>
-                )}
+                {piket &&
+                  (piket === time ? (
+                    <p style={{ color: "green" }}>Tepat Waktu</p>
+                  ) : (
+                    <p style={{ color: "red" }}>Terlambat</p>
+                  ))}
               </ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
               <ListItemText primary="Masuk Biasa" />
               <ListItemSecondaryAction>
-                {masukBiasa === new Date().getHours().toString() ? (
-                  <p style={{ color: "green" }}>Tepat Waktu</p>
-                ) : (
-                  <p style={{ color: "red" }}>Terlambat</p>
-                )}
+                {masukBiasa &&
+                  (masukBiasa === time ? (
+                    <p style={{ color: "green" }}>Tepat Waktu</p>
+                  ) : (
+                    <p style={{ color: "red" }}>Terlambat</p>
+                  ))}
               </ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
               <ListItemText primary="Tidak G.kelas" />
-              <ListItemSecondaryAction>{bukanGKelas}</ListItemSecondaryAction>
+              <ListItemSecondaryAction>
+                {" "}
+                <p style={{ color: "gray", fontSize: 15 }}>{bukanGKelas}</p>
+              </ListItemSecondaryAction>
+            </ListItem>
+            <ListItem button>
+              <ListItemText primary="Mata Pelajaran" />
+              <ListItemSecondaryAction>
+                {" "}
+                <p style={{ color: "gray", fontSize: 15 }}>{mapelSet}</p>
+              </ListItemSecondaryAction>
+            </ListItem>
+            <ListItem button>
+              <ListItemText primary="Waktu Mulai Belajar" />
+              <ListItemSecondaryAction>
+                <p style={{ color: "gray", fontSize: 15 }}>{waktuMulaiSet}</p>
+              </ListItemSecondaryAction>
             </ListItem>
           </List>
         </DialogContent>
@@ -477,7 +553,6 @@ function ScanQrCode() {
                   disableRipple
                   value="07:15"
                   onChange={(e) => {
-                    console.log(e.target.value);
                     dispatch({ type: STATE_MODAL_PIKET, payload: false });
                     setTidakpiket(true);
                     setLihatFormAbsensi(true);

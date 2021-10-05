@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -19,7 +19,15 @@ import {
 } from "@david.kucsai/react-pdf-table";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
+import db from "../../firebase";
+
 const HasilkanPDF = () => {
+  const [hasil, setHasil] = useState([]);
+  useEffect(() => {
+    db.collection("guru").onSnapshot((snapshot) => {
+      setHasil(snapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
   const styles = StyleSheet.create({
     textLinkPDF: {
       textDecoration: "none",
@@ -52,8 +60,11 @@ const HasilkanPDF = () => {
       color: "gray",
       fontSize: 12,
     },
+jarakTable:{
+marginTop: 30}
   });
-
+  const tanggal = new Date();
+  const hari = tanggal.toLocaleString();
   const MyDocument = () => (
     <Document>
       <Page>
@@ -61,31 +72,37 @@ const HasilkanPDF = () => {
           <Text style={styles.textJudul}>
             Laporan Data Guru SD SWASTA Melbourne
           </Text>
-          <Text>Tanggal: 20 Maret 2021</Text>
+          <Text style={styles.textJudul}>Tanggal: {hari}</Text>
         </View>
-        <Table
-          data={[
-            {
-              nama: "John",
-              status: "Smith",
-              gambar: "HADIR",
-            },
-          ]}
-        >
+        <Table style={styles.jarakTable} data={hasil}>
           <TableHeader textAlign={"center"}>
             <TableCell weighting={0.4}>Nama Guru</TableCell>
-            <TableCell weighting={0.4}>Tanggal Absensi</TableCell>
+            <TableCell weighting={0.4}>Jam Absensi</TableCell>
             <TableCell weighting={0.4}>Status Kehadiran</TableCell>
+<TableCell weighting={0.4}>Piket</TableCell>
+<TableCell weighting={0.4}>Tidak Piket</TableCell>
+<TableCell weighting={0.4}>Tidak Guru Kelas</TableCell>
+<TableCell weighting={0.4}>Mata Pelajaran</TableCell>
+<TableCell weighting={0.4}>Jam Mulai</TableCell>
           </TableHeader>
           <TableBody textAlign={"center"}>
-            <DataTableCell weighting={0.4} getContent={(r) => r.nama} />
+            <DataTableCell weighting={0.4} getContent={(r) => r.name} />
+            <DataTableCell weighting={0.4} getContent={(r) => r.jam} />
             <DataTableCell weighting={0.4} getContent={(r) => r.status} />
-            <DataTableCell weighting={0.4} getContent={(r) => r.gambar} />
+            <DataTableCell weighting={0.4} getContent={(r) => r.piket} />
+            <DataTableCell weighting={0.4} getContent={(r) => r.tidakpiket} />
+            <DataTableCell
+              weighting={0.4}
+              getContent={(r) => r.tidakgurukelas}
+            />
+            <DataTableCell weighting={0.4} getContent={(r) => r.mapel} />
+            <DataTableCell weighting={0.4} getContent={(r) => r.waktumulai} />
           </TableBody>
         </Table>
         <View style={styles.tandaTangan}>
           <Text>20 Oktober 2021,</Text>
           <Text>Mengetahui, Kepala Sekolah SDS Melbourne</Text>
+          <Text>Rehulina Simamora,BA</Text>
         </View>
       </Page>
     </Document>

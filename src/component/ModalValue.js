@@ -10,7 +10,18 @@ import db, { storage } from "../firebase";
 import SendIcon from "@material-ui/icons/Send";
 // render Component
 const ModalValue = () => {
-  const [{ nama, statusSakit }, dispatch] = stateValueProvider();
+  const [
+    {
+      nama,
+      statusSakit,
+      mapelSet,
+      waktuMulaiSet,
+      piket,
+      bukanGKelas,
+      masukBiasa,
+    },
+    dispatch,
+  ] = stateValueProvider();
   const filePicker = useRef(null);
   const [imagetopost, setImagetopost] = useState();
   const [conditiontext, setConditiontext] = useState(false);
@@ -59,11 +70,16 @@ const ModalValue = () => {
             .then((url) => {
               const tanggal = new Date();
               const hari = tanggal.toLocaleString();
-              db.collection("dataabsen").add({
+              db.collection("guru").add({
                 hari: hari,
                 urlImg: url,
                 nama: nama,
                 status: statusSakit,
+                mapel: mapelSet,
+                waktumulai: waktuMulaiSet,
+                piket: piket,
+                tidakgurukelas: bukanGKelas,
+                tidakpiket: masukBiasa,
               });
             });
         }
@@ -116,7 +132,7 @@ const ModalValue = () => {
         endIcon={<SendIcon />}
         onClick={addImageToDB}
       >
-        SEND
+        Kirim Data
       </Button>
     </div>
   );

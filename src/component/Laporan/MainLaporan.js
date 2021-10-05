@@ -11,8 +11,9 @@ import SideBarLaporan from "./SideBarLaporan";
 import "./LaporanScreen.css";
 import TableData from "../DataLaporan/TableData";
 import HasilkanPDF from "../DataLaporan/HasilkanPDF";
-import TbCard from "./TbCard";
+
 import TbSuratSakit from "./TbSuratSakit";
+
 const MainLaporan = () => {
   const [{ login }, dispatch] = stateValueProvider();
   const { user } = login;
@@ -29,6 +30,7 @@ const MainLaporan = () => {
           textAlign: "center",
           textTransform: "uppercase",
           marginBottom: 20,
+          marginTop: 20,
         }}
       >
         Dasboard Guru SD Swasta Melbourne
@@ -36,13 +38,10 @@ const MainLaporan = () => {
       <Divider />
       <TableData />
       <HasilkanPDF />
-      <div className="main-Laporan-kedua">
-        <h2 style={{ color: "gray" }}>
-          Table Guru dan Pegawai SD SWASTA MelBourne
-        </h2>
-        <TbCard />
-      </div>
+      <Divider />
       <TbSuratSakit />
+
+      {/* just only a snackbar */}
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",

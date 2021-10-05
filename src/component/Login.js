@@ -27,7 +27,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    db.collection("dataabsen").onSnapshot((snapshot) => {
+    db.collection("user").onSnapshot((snapshot) => {
       setVerifyEmail(snapshot.docs.map((doc) => doc.data()));
     });
     dispatch({ type: STATE_MODAL_LOGIN, payload: true });
