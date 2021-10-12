@@ -21,10 +21,7 @@ function BawahNavigation() {
     e.preventDefault();
     history.push("/");
   };
-  const handleBotomMakeQrCode = (e) => {
-    e.preventDefault();
-    history.push("/makeqrcode");
-  };
+
   const handleBottomScanQrCode = (e) => {
     e.preventDefault();
     history.push("/scanqrcode");
@@ -47,13 +44,6 @@ function BawahNavigation() {
         label="Home"
         onClick={handleBottomHome}
       />
-
-      <BottomNavigationAction
-        onClick={handleBotomMakeQrCode}
-        label="Buat QRCode"
-        icon={<ScannerIcon />}
-      />
-
       <BottomNavigationAction
         onClick={handleBottomScanQrCode}
         label="Scann QrCode"

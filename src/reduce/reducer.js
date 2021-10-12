@@ -14,6 +14,7 @@ import {
   TAMPIL_BUTTON_PIKET,
   STATE_MAPEL,
   STATE_WAKTU_MULAI,
+  MODAL_CAMERA_SCAN,
 } from "../const/stateCondition";
 
 export const initial = {
@@ -32,6 +33,7 @@ export const initial = {
   tampilButtonPiket: false,
   mapelSet: "",
   waktuMulaiSet: "",
+  modalCameraScan: false,
 };
 export const reduce = (state, action) => {
   switch (action.type) {
@@ -63,7 +65,8 @@ export const reduce = (state, action) => {
       return { ...state, mapelSet: action.payload };
     case STATE_WAKTU_MULAI:
       return { ...state, waktuMulaiSet: action.payload };
-
+    case MODAL_CAMERA_SCAN:
+      return { ...state, modalCameraScan: action.payload };
     default:
       return state;
   }

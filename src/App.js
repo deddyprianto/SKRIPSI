@@ -10,10 +10,10 @@ import { stateValueProvider } from "./StateProvider";
 import HasilkanPDF from "./component/DataLaporan/HasilkanPDF";
 
 const Main = lazy(() => import("./component/Main"));
-const MakeQrCode = lazy(() => import("./component/MakeQrCode"));
 const ScanQrCode = lazy(() => import("./component/ScanQrCode"));
 const Login = lazy(() => import("./component/Login"));
 const LaporanScreen = lazy(() => import("./component/Laporan/LaporanScreen"));
+
 function App() {
   const { width } = useWindowSize();
   return (
@@ -43,9 +43,6 @@ function App() {
             </Route>
             <Route path="/scanqrcode">
               <ScanQrCode />
-            </Route>
-            <Route path="/makeqrcode">
-              <MakeQrCode />
             </Route>
             <Route path="/" exact>
               <Main />

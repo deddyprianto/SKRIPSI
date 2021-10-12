@@ -24,6 +24,7 @@ import {
   MODAL_LOKASI,
   STATE_MAPEL,
   STATE_WAKTU_MULAI,
+  MODAL_CAMERA_SCAN,
 } from "../const/stateCondition";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -48,7 +49,11 @@ import {
 } from "@material-ui/core";
 import DapatkanLokasi from "./DapatkanLokasi";
 import { CircularProgress } from "@material-ui/core";
-import { PersonPinCircle } from "@material-ui/icons";
+import {
+  PersonPinCircle,
+  StopScreenShareOutlined,
+  CameraAlt,
+} from "@material-ui/icons";
 
 function ScanQrCode() {
   const [
@@ -64,10 +69,10 @@ function ScanQrCode() {
       tampilButtonPiket,
       mapelSet,
       waktuMulaiSet,
+      modalCameraScan,
     },
     dispatch,
   ] = stateValueProvider();
-  const [resscancamera, setResscancamera] = useState("");
   const [value, setValue] = useState("Status");
   const [hadir, setHadir] = useState(false);
   const [sakit, setSakit] = useState(false);
@@ -84,6 +89,10 @@ function ScanQrCode() {
   const [lihatFormAbsensi, setLihatFormAbsensi] = useState(false);
   const [mapel, setMapel] = useState("");
   const [waktuMulai, setWaktuMulai] = useState("");
+  const [startScann, setStartScann] = useState(false);
+  const [hasilScan, setHasilScan] = useState("");
+  const [loadingCamera, setLoadingCamera] = useState(false);
+  const [proggress, setProggress] = useState(10);
 
   useEffect(() => {
     Aos.init({
@@ -105,30 +114,32 @@ function ScanQrCode() {
     };
   }, [modalLokasi]);
 
-  const play = (e) => {
-    e.preventDefault();
-    alert(
-      "Terimakasih, tombol ini di berguna untuk menjaga aplikasi agar akurat dalam pemindaian data dari Qrcode"
-    );
-    const dataImg = document.getElementById("img");
-    dataImg.addEventListener("change", () => {
-      const fileImg = dataImg.files[0];
-      if (!fileImg) {
-        return;
-      }
-      QrScanner.scanImage(fileImg)
-        .then((res) => {
-          setResscancamera(res);
-          dispatch({ type: STATE_NAME, payload: res });
-        })
-        .catch((err) => console.log(`ini err kamu => `, err));
-    });
-  };
+  useEffect(() => {
+    let loadingCameraScan;
+    if (!modalCameraScan) {
+      setLoadingCamera(true);
+    } else {
+      loadingCameraScan = setTimeout(() => {
+        setLoadingCamera(false);
+      }, 4000);
+    }
+    return () => {
+      clearTimeout(loadingCameraScan);
+    };
+  }, [modalCameraScan]);
+
+  if (startScann) {
+    const idVideo = document.getElementById("video-scan");
+    const qrScanner = new QrScanner(idVideo, (res) => setHasilScan(res));
+    qrScanner.start();
+  }
+
   const tanggal = new Date();
   const hari = tanggal.toLocaleString();
+
   const saveData = () => {
     const checkData = db.collection("guru").add({
-      name: resscancamera,
+      name: hasilScan,
       jam: hari,
       status: value,
       piket: piket,
@@ -182,7 +193,8 @@ function ScanQrCode() {
     },
   }));
   const classes = useStyles();
-  // perlihatkan lokasi
+
+  // function untuk mengecek lokasi guru
   const lacakLokasiGuru = () => {
     dispatch({ type: MODAL_LOKASI, payload: true });
     navigator.geolocation.getCurrentPosition(
@@ -194,6 +206,7 @@ function ScanQrCode() {
       { enableHighAccuracy: true, timeout: 5000 }
     );
   };
+
   const cekApakahPiketApaTidak = () => {
     dispatch({ type: STATE_MODAL_PIKET, payload: true });
   };
@@ -228,69 +241,29 @@ function ScanQrCode() {
             </Button>
           )}
           {lihatFormAbsensi && (
-            <>
-              <img
-                data-aos-delay="1000"
-                data-aos="zoom-out-up"
-                src={codescanner}
-                alt=""
-              />
-              <button
-                data-aos-delay="2000"
-                data-aos="zoom-out"
-                className="btn__scan"
-                onClick={play}
-              >
-                Harap Tekan Tombol ini sebelum mulai Proses Pengabsenan
-              </button>
-              <input
-                data-aos-delay="2000"
-                data-aos="zoom-out"
-                type="file"
-                id="img"
-                placeholder="Upload QRCODE"
-                style={{ color: "white", marginBottom: 50 }}
-              />
-              <div
-                data-aos-delay="2000"
-                data-aos="zoom-out"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: -41,
-                }}
-              >
-                <TextField
-                  id="outlined-basic"
-                  onChange={(e) => {
-                    setMapel(e.target.value);
-                    dispatch({ type: STATE_MAPEL, payload: e.target.value });
-                  }}
-                  label="Mata Pelajaran"
-                  variant="outlined"
-                  color="secondary"
-                  style={{ color: "white" }}
-                />
-                <TextField
-                  onChange={(e) => {
-                    setWaktuMulai(e.target.value);
-                    dispatch({
-                      type: STATE_WAKTU_MULAI,
-                      payload: e.target.value,
-                    });
-                  }}
-                  style={{ color: "white" }}
-                  id="outlined-basic"
-                  label="Jam Mulai belajar"
-                  variant="outlined"
-                  color="secondary"
-                />
-              </div>
-            </>
+            <Button
+              onClick={() => setStartScann(true)}
+              variant="outlined"
+              startIcon={<CameraAlt />}
+              color="primary"
+            >
+              Buka Camera Scan
+            </Button>
           )}
-          {resscancamera && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <video id="video-scan" width={300} height={300}></video>
+            <h1 style={{ color: "gray" }}>{hasilScan}</h1>
+          </div>
+
+          {/* ini merupakan hasil scann */}
+
+          {hasilScan && (
             <div className="card_custom" data-aos="fade-down">
               <div className="content__hasil">
                 <h3
@@ -303,7 +276,7 @@ function ScanQrCode() {
                   Hasil Scan QRCODE
                 </h3>
                 <hr />
-                <p style={{ fontWeight: "bold" }}>{resscancamera}</p>
+                <p style={{ fontWeight: "bold" }}>{hasilScan}</p>
                 <FormControl
                   component="fieldset"
                   color="secondary"
@@ -313,7 +286,7 @@ function ScanQrCode() {
                     component="legend"
                     className="text__statusKehadiran"
                   >
-                    Attendance Status
+                    Status Kehadiran
                   </FormLabel>
                   <RadioGroup
                     aria-label="gender"
@@ -439,7 +412,7 @@ function ScanQrCode() {
             <ListItem button>
               <ListItemText primary="Nama" />
               <ListItemSecondaryAction>
-                <p style={{ color: "gray", fontSize: 15 }}>{resscancamera}</p>
+                <p style={{ color: "gray", fontSize: 15 }}>{hasilScan}</p>
               </ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
@@ -636,6 +609,45 @@ function ScanQrCode() {
         <DialogActions>
           <Button
             onClick={() => dispatch({ type: MODAL_LOKASI, payload: false })}
+            color="primary"
+          >
+            Tutup
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* modal camera scanner */}
+      <Dialog
+        open={modalCameraScan}
+        onClose={() => dispatch({ type: MODAL_CAMERA_SCAN, payload: false })}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Camera Terbuka Silahkan Scann...
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {loadingCamera ? (
+              <CircularProgress
+                style={{ textAlign: "center" }}
+                color="secondary"
+              />
+            ) : (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {!hasilScan ? (
+                  <video id="video-scan" width={300} height={300}></video>
+                ) : (
+                  <h2 style={{ color: "gray" }}>{hasilScan}</h2>
+                )}
+              </div>
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() =>
+              dispatch({ type: MODAL_CAMERA_SCAN, payload: false })
+            }
             color="primary"
           >
             Tutup
