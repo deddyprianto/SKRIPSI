@@ -6,15 +6,15 @@ import {
   STATE_NAME,
   STATE_SAKIT,
   STATE_SIMPAN_LOKASI,
-  STATE_MODAL_PIKET,
-  STATE_PIKET,
-  STATE_MASUK_BIASA,
-  STATE_BUKAN_GKELAS,
   MODAL_LOKASI,
-  TAMPIL_BUTTON_PIKET,
   STATE_MAPEL,
   STATE_WAKTU_MULAI,
   MODAL_CAMERA_SCAN,
+  STATE_VIDEO_SCAN,
+  STATE_HARI,
+  STATE_KELAS,
+  STATE_JAM,
+  STATE_MAPELDIBAWAKAN,
 } from "../const/stateCondition";
 
 export const initial = {
@@ -25,15 +25,14 @@ export const initial = {
   modalLogin: false,
   nama: "",
   statusSakit: "",
-  modalPiket: false,
-  piket: "",
-  masukBiasa: "",
-  bukanGKelas: "",
-  modalLokasi: false,
-  tampilButtonPiket: false,
   mapelSet: "",
   waktuMulaiSet: "",
   modalCameraScan: false,
+  videoScan: false,
+  kelas: "",
+  hari: "",
+  jam: "",
+  mapelDibawakan: "",
 };
 export const reduce = (state, action) => {
   switch (action.type) {
@@ -49,24 +48,24 @@ export const reduce = (state, action) => {
       return { ...state, modal: action.payload };
     case STATE_MODAL_LOGIN:
       return { ...state, modalLogin: action.payload };
-    case STATE_MODAL_PIKET:
-      return { ...state, modalPiket: action.payload };
-    case STATE_PIKET:
-      return { ...state, piket: action.payload };
-    case STATE_MASUK_BIASA:
-      return { ...state, masukBiasa: action.payload };
-    case STATE_BUKAN_GKELAS:
-      return { ...state, bukanGKelas: action.payload };
     case MODAL_LOKASI:
       return { ...state, modalLokasi: action.payload };
-    case TAMPIL_BUTTON_PIKET:
-      return { ...state, tampilButtonPiket: action.payload };
     case STATE_MAPEL:
       return { ...state, mapelSet: action.payload };
     case STATE_WAKTU_MULAI:
       return { ...state, waktuMulaiSet: action.payload };
     case MODAL_CAMERA_SCAN:
       return { ...state, modalCameraScan: action.payload };
+    case STATE_VIDEO_SCAN:
+      return { ...state, videoScan: action.payload };
+    case STATE_HARI:
+      return { ...state, hari: action.payload };
+    case STATE_JAM:
+      return { ...state, jam: action.payload };
+    case STATE_KELAS:
+      return { ...state, kelas: action.payload };
+    case STATE_MAPELDIBAWAKAN:
+      return { ...state, mapelDibawakan: action.payload };
     default:
       return state;
   }

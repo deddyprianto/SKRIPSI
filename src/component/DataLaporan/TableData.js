@@ -9,7 +9,7 @@ import "./TableData.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import db from "../../firebase";
-
+import { stateValueProvider } from "../../StateProvider";
 const TableData = () => {
   const [hasil, setHasil] = useState([]);
   useEffect(() => {
@@ -17,6 +17,7 @@ const TableData = () => {
       setHasil(snapshot.docs.map((doc) => doc.data()));
     });
   }, []);
+  const [{ kelas, hari, jam, mapelDibawakan }, dispatch] = stateValueProvider();
   const useStyles = makeStyles((theme) => ({
     root: {
       display: "flex",
@@ -44,6 +45,7 @@ const TableData = () => {
       style={{
         marginTop: 20,
         marginBottom: 20,
+        width: "85%",
       }}
     >
       <h2 style={{ textAlign: "center", color: "gray" }}>
@@ -54,13 +56,12 @@ const TableData = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">Nama</TableCell>
+              <TableCell align="right">Nama Guru</TableCell>
+              <TableCell align="right">Status Kehadiran</TableCell>
+              <TableCell align="right">Kelas</TableCell>
+              <TableCell align="right">Hari</TableCell>
               <TableCell align="right">Jam</TableCell>
-              <TableCell align="right">Piket</TableCell>
-              <TableCell align="right">Tidak Piket</TableCell>
-              <TableCell align="right">Tidak Guru Kelas</TableCell>
-              <TableCell align="right">Mata Pelajaran</TableCell>
-              <TableCell align="right">Waktu Mulai</TableCell>
+              <TableCell align="right">Mapel Dibawakan</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -69,13 +70,11 @@ const TableData = () => {
                 <TableCell component="th" scope="row">
                   {data.name}
                 </TableCell>
-                <TableCell align="right">{data.jam}</TableCell>
                 <TableCell align="right">{data.status}</TableCell>
-                <TableCell align="right">{data.piket}</TableCell>
-                <TableCell align="right">{data.tidakpiket}</TableCell>
-                <TableCell align="right">{data.tidakgurukelas}</TableCell>
-                <TableCell align="right">{data.mapel}</TableCell>
-                <TableCell align="right">{data.waktumulai}</TableCell>
+                <TableCell align="right">{kelas}</TableCell>
+                <TableCell align="right">{hari}</TableCell>
+                <TableCell align="right">{jam}</TableCell>
+                <TableCell align="right">{mapelDibawakan}</TableCell>
               </TableRow>
             ))}
           </TableBody>

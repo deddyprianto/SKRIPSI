@@ -11,8 +11,11 @@ import SideBarLaporan from "./SideBarLaporan";
 import "./LaporanScreen.css";
 import TableData from "../DataLaporan/TableData";
 import HasilkanPDF from "../DataLaporan/HasilkanPDF";
-
+import TableJadwal from "../DataLaporan/TableJadwal";
+import TableMapel from "../DataLaporan/TableMapel";
 import TbSuratSakit from "./TbSuratSakit";
+import InputJadwal from "../DataLaporan/InputJadwal";
+import InputMapel from "../DataLaporan/InputMapel";
 
 const MainLaporan = () => {
   const [{ login }, dispatch] = stateValueProvider();
@@ -24,7 +27,15 @@ const MainLaporan = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <h2
         style={{
           textAlign: "center",
@@ -38,6 +49,30 @@ const MainLaporan = () => {
       <Divider />
       <TableData />
       <HasilkanPDF />
+      <Divider />
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <TableJadwal />
+        <InputJadwal />
+      </div>
+      <Divider />
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <TableMapel />
+        <InputMapel />
+      </div>
       <Divider />
       <TbSuratSakit />
 

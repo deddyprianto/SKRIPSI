@@ -20,14 +20,16 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import db from "../../firebase";
-
+import { stateValueProvider } from "../../StateProvider";
 const HasilkanPDF = () => {
   const [hasil, setHasil] = useState([]);
+
   useEffect(() => {
     db.collection("guru").onSnapshot((snapshot) => {
       setHasil(snapshot.docs.map((doc) => doc.data()));
     });
   }, []);
+  const [{ kelas, hari, jam, mapelDibawakan }, dispatch] = stateValueProvider();
   const styles = StyleSheet.create({
     textLinkPDF: {
       textDecoration: "none",
@@ -60,47 +62,55 @@ const HasilkanPDF = () => {
       color: "gray",
       fontSize: 12,
     },
-jarakTable:{
-marginTop: 30}
+    jarakTable: {
+      marginTop: 30,
+    },
+    ketAkhir: {
+      margin: 20,
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      color: "gray",
+      fontSize: 12,
+    },
   });
-  const tanggal = new Date();
-  const hari = tanggal.toLocaleString();
+
   const MyDocument = () => (
     <Document>
       <Page>
         <View style={styles.backgroundJudulHalaman}>
           <Text style={styles.textJudul}>
-            Laporan Data Guru SD SWASTA Melbourne
+            Laporan Kehadiran Guru SD SWASTA Melbourne
           </Text>
-          <Text style={styles.textJudul}>Tanggal: {hari}</Text>
+          <Text style={styles.textJudul}>Per Tanggal: {hari}</Text>
         </View>
         <Table style={styles.jarakTable} data={hasil}>
           <TableHeader textAlign={"center"}>
             <TableCell weighting={0.4}>Nama Guru</TableCell>
-            <TableCell weighting={0.4}>Jam Absensi</TableCell>
             <TableCell weighting={0.4}>Status Kehadiran</TableCell>
-<TableCell weighting={0.4}>Piket</TableCell>
-<TableCell weighting={0.4}>Tidak Piket</TableCell>
-<TableCell weighting={0.4}>Tidak Guru Kelas</TableCell>
-<TableCell weighting={0.4}>Mata Pelajaran</TableCell>
-<TableCell weighting={0.4}>Jam Mulai</TableCell>
+            <TableCell weighting={0.4}>Kelas</TableCell>
+            <TableCell weighting={0.4}>Hari</TableCell>
+            <TableCell weighting={0.4}>Jam</TableCell>
+            <TableCell weighting={0.4}>Mapel Dibawakan</TableCell>
           </TableHeader>
           <TableBody textAlign={"center"}>
             <DataTableCell weighting={0.4} getContent={(r) => r.name} />
-            <DataTableCell weighting={0.4} getContent={(r) => r.jam} />
             <DataTableCell weighting={0.4} getContent={(r) => r.status} />
-            <DataTableCell weighting={0.4} getContent={(r) => r.piket} />
-            <DataTableCell weighting={0.4} getContent={(r) => r.tidakpiket} />
-            <DataTableCell
-              weighting={0.4}
-              getContent={(r) => r.tidakgurukelas}
-            />
-            <DataTableCell weighting={0.4} getContent={(r) => r.mapel} />
-            <DataTableCell weighting={0.4} getContent={(r) => r.waktumulai} />
+            <DataTableCell weighting={0.4} getContent={() => kelas} />
+            <DataTableCell weighting={0.4} getContent={() => hari} />
+            <DataTableCell weighting={0.4} getContent={() => jam} />
+            <DataTableCell weighting={0.4} getContent={() => mapelDibawakan} />
           </TableBody>
         </Table>
+        <View style={styles.ketAkhir}>
+          <Text>Ket Jumlah Kehadiran Guru</Text>
+          <Text>Jumlah Hadir: 3 Guru</Text>
+          <Text>Jumlah Sakit: 0</Text>
+          <Text>Jumlah Izin: 0</Text>
+          <Text>Jumlah Alpha:0</Text>
+        </View>
         <View style={styles.tandaTangan}>
-          <Text>20 Oktober 2021,</Text>
+          <Text>19 Oktober 2021,</Text>
           <Text>Mengetahui, Kepala Sekolah SDS Melbourne</Text>
           <Text>Rehulina Simamora,BA</Text>
         </View>
@@ -133,14 +143,14 @@ marginTop: 30}
           }
         </PDFDownloadLink>
       </Button>
-      <Button
+      {/* <Button
         variant="contained"
         style={{ marginTop: 30 }}
         color="secondary"
         startIcon={<DeleteIcon />}
       >
         Hapus Data
-      </Button>
+      </Button> */}
     </div>
   );
 };

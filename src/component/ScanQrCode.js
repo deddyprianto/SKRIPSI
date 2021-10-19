@@ -15,16 +15,17 @@ import ModalValue from "./ModalValue";
 import { stateValueProvider } from "../StateProvider";
 import {
   STATE_MODAL,
-  STATE_MODAL_PIKET,
   STATE_NAME,
   STATE_SAKIT,
-  STATE_PIKET,
-  STATE_MASUK_BIASA,
-  STATE_BUKAN_GKELAS,
   MODAL_LOKASI,
   STATE_MAPEL,
   STATE_WAKTU_MULAI,
   MODAL_CAMERA_SCAN,
+  STATE_VIDEO_SCAN,
+  STATE_JAM,
+  STATE_KELAS,
+  STATE_MAPELDIBAWAKAN,
+  STATE_HARI,
 } from "../const/stateCondition";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -60,7 +61,7 @@ function ScanQrCode() {
     {
       modal,
       modalLocation,
-      modalPiket,
+      videoScan,
       piket,
       masukBiasa,
       bukanGKelas,
@@ -87,16 +88,21 @@ function ScanQrCode() {
   const [longitude, setLongitude] = useState("");
   const [loadingLokasi, setLoadingLokasi] = useState(true);
   const [lihatFormAbsensi, setLihatFormAbsensi] = useState(false);
-  const [mapel, setMapel] = useState("");
-  const [waktuMulai, setWaktuMulai] = useState("");
   const [startScann, setStartScann] = useState(false);
   const [hasilScan, setHasilScan] = useState("");
   const [loadingCamera, setLoadingCamera] = useState(false);
   const [proggress, setProggress] = useState(10);
-
+  const [dataJadwal, setDataJadwal] = useState([]);
+  const [mapelDibawkan, setMapelDibawakan] = useState("");
+  const [jam, setJam] = useState("");
+  const [hari, setHari] = useState("");
+  const [kelas, setKelas] = useState("");
   useEffect(() => {
     Aos.init({
       duration: "2000",
+    });
+    db.collection("Jadwal").onSnapshot((snapshot) => {
+      setDataJadwal(snapshot.docs.map((doc) => doc.data()));
     });
   }, []);
 
@@ -121,6 +127,11 @@ function ScanQrCode() {
     } else {
       loadingCameraScan = setTimeout(() => {
         setLoadingCamera(false);
+        dispatch({ type: MODAL_CAMERA_SCAN, payload: false });
+        dispatch({ type: STATE_VIDEO_SCAN, payload: true });
+        const idVideo = document.getElementById("video-scan");
+        const qrScanner = new QrScanner(idVideo, (res) => setHasilScan(res));
+        qrScanner.start();
       }, 4000);
     }
     return () => {
@@ -128,27 +139,26 @@ function ScanQrCode() {
     };
   }, [modalCameraScan]);
 
-  if (startScann) {
-    const idVideo = document.getElementById("video-scan");
-    const qrScanner = new QrScanner(idVideo, (res) => setHasilScan(res));
-    qrScanner.start();
-  }
-
-  const tanggal = new Date();
-  const hari = tanggal.toLocaleString();
-
   const saveData = () => {
     const checkData = db.collection("guru").add({
       name: hasilScan,
-      jam: hari,
       status: value,
-      piket: piket,
-      tidakpiket: masukBiasa,
-      tidakgurukelas: bukanGKelas,
-      mapel: mapel,
-      waktuMulai: waktuMulai,
     });
+
     if (checkData) {
+      dataJadwal.map((data) => {
+        setMapelDibawakan(data.mataPelDibawakan);
+        setJam(data.jam);
+        setHari(data.hari);
+        setKelas(data.kelas);
+        dispatch({ type: STATE_HARI, payload: data.hari });
+        dispatch({ type: STATE_JAM, payload: data.jam });
+        dispatch({ type: STATE_KELAS, payload: data.kelas });
+        dispatch({
+          type: STATE_MAPELDIBAWAKAN,
+          payload: data.mataPelDibawakan,
+        });
+      });
       setPemberitahuanAbsen(true);
     }
   };
@@ -207,12 +217,9 @@ function ScanQrCode() {
     );
   };
 
-  const cekApakahPiketApaTidak = () => {
-    dispatch({ type: STATE_MODAL_PIKET, payload: true });
-  };
-
   const today = new Date();
   const time = today.getHours() + ":" + today.getMinutes();
+  console.log(hasilScan);
 
   return (
     <div className="container__ScanQrCode">
@@ -228,18 +235,9 @@ function ScanQrCode() {
             color="secondary"
             style={{ margin: 10 }}
           >
-            Cek Lokasi Anda
+            Cek Lokasi Anda Saat Ini
           </Button>
-          {tampilButtonPiket && (
-            <Button
-              style={{ margin: 10 }}
-              color="primary"
-              variant="contained"
-              onClick={cekApakahPiketApaTidak}
-            >
-              Apakah Anda Piket ?
-            </Button>
-          )}
+
           {lihatFormAbsensi && (
             <Button
               onClick={() => setStartScann(true)}
@@ -250,19 +248,21 @@ function ScanQrCode() {
               Buka Camera Scan
             </Button>
           )}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-          >
-            <video id="video-scan" width={300} height={300}></video>
-            <h1 style={{ color: "gray" }}>{hasilScan}</h1>
-          </div>
+          {/* video camera scann */}
+          {videoScan && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <video id="video-scan" width={300} height={300}></video>
+              <h1 style={{ color: "gray" }}>{hasilScan}</h1>
+            </div>
+          )}
 
           {/* ini merupakan hasil scann */}
-
           {hasilScan && (
             <div className="card_custom" data-aos="fade-down">
               <div className="content__hasil">
@@ -420,52 +420,20 @@ function ScanQrCode() {
               <ListItemSecondaryAction>{value}</ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
-              <ListItemText primary="Jam absen" />
-              <ListItemSecondaryAction>
-                <p style={{ fontSize: 13, color: "gray" }}>{hari}</p>
-              </ListItemSecondaryAction>
+              <ListItemText primary="Roster Mapel" />
+              <ListItemSecondaryAction>{mapelDibawkan}</ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
-              <ListItemText primary="Piket" />
-              <ListItemSecondaryAction>
-                {piket &&
-                  (piket === time ? (
-                    <p style={{ color: "green" }}>Tepat Waktu</p>
-                  ) : (
-                    <p style={{ color: "red" }}>Terlambat</p>
-                  ))}
-              </ListItemSecondaryAction>
+              <ListItemText primary="Hari" />
+              <ListItemSecondaryAction>{hari}</ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
-              <ListItemText primary="Masuk Biasa" />
-              <ListItemSecondaryAction>
-                {masukBiasa &&
-                  (masukBiasa === time ? (
-                    <p style={{ color: "green" }}>Tepat Waktu</p>
-                  ) : (
-                    <p style={{ color: "red" }}>Terlambat</p>
-                  ))}
-              </ListItemSecondaryAction>
+              <ListItemText primary="Jam" />
+              <ListItemSecondaryAction>{jam}</ListItemSecondaryAction>
             </ListItem>
             <ListItem button>
-              <ListItemText primary="Tidak G.kelas" />
-              <ListItemSecondaryAction>
-                {" "}
-                <p style={{ color: "gray", fontSize: 15 }}>{bukanGKelas}</p>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Mata Pelajaran" />
-              <ListItemSecondaryAction>
-                {" "}
-                <p style={{ color: "gray", fontSize: 15 }}>{mapelSet}</p>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Waktu Mulai Belajar" />
-              <ListItemSecondaryAction>
-                <p style={{ color: "gray", fontSize: 15 }}>{waktuMulaiSet}</p>
-              </ListItemSecondaryAction>
+              <ListItemText primary="Kelas" />
+              <ListItemSecondaryAction>{kelas}</ListItemSecondaryAction>
             </ListItem>
           </List>
         </DialogContent>
@@ -475,115 +443,6 @@ function ScanQrCode() {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Dialog
-        open={modalPiket}
-        onClose={() => dispatch({ type: STATE_MODAL_PIKET, payload: false })}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle>Apakah anda hari ini Piket</DialogTitle>
-        <DialogContent>
-          <List
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-            subheader={
-              <ListSubheader component="div" id="nested-list-subheader">
-                Wajib Pilih salah satu
-              </ListSubheader>
-            }
-            className={classes.root}
-          >
-            <ListItem button>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={yapiket}
-                  tabIndex={-1}
-                  value="07:00"
-                  disableRipple
-                  onChange={(e) => {
-                    dispatch({ type: STATE_MODAL_PIKET, payload: false });
-                    setLihatFormAbsensi(true);
-                    setYapiket(true);
-                    dispatch({ type: STATE_PIKET, payload: e.target.value });
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Ya, Piket" />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="comments">
-                  <h2 style={{ color: "gray", fontSize: 13 }}>07:00 Wib</h2>
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={tidakpiket}
-                  tabIndex={-1}
-                  disableRipple
-                  value="07:15"
-                  onChange={(e) => {
-                    dispatch({ type: STATE_MODAL_PIKET, payload: false });
-                    setTidakpiket(true);
-                    setLihatFormAbsensi(true);
-                    dispatch({
-                      type: STATE_MASUK_BIASA,
-                      payload: e.target.value,
-                    });
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Tidak, Piket" />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="comments">
-                  <h2 style={{ color: "gray", fontSize: 13 }}>07:15 Wib</h2>
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={tidakgurukelas}
-                  tabIndex={-1}
-                  disableRipple
-                  value="Saya Bukan Guru Kelas"
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                    dispatch({ type: STATE_MODAL_PIKET, payload: false });
-                    setLihatFormAbsensi(true);
-                    dispatch({
-                      type: STATE_BUKAN_GKELAS,
-                      payload: e.target.value,
-                    });
-                    setTidakgurukelas(true);
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText primary="Saya Guru Lepas" />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="comments">
-                  <ScheduleIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          </List>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() =>
-              dispatch({ type: STATE_MODAL_PIKET, payload: false })
-            }
-            color="primary"
-          >
-            Tutup
-          </Button>
-        </DialogActions>
-      </Dialog>
-
       {/* modal cek lokasi */}
       <Dialog
         open={modalLokasi}
@@ -616,6 +475,7 @@ function ScanQrCode() {
         </DialogActions>
       </Dialog>
       {/* modal camera scanner */}
+
       <Dialog
         open={modalCameraScan}
         onClose={() => dispatch({ type: MODAL_CAMERA_SCAN, payload: false })}
@@ -627,32 +487,14 @@ function ScanQrCode() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {loadingCamera ? (
+            {loadingCamera && (
               <CircularProgress
                 style={{ textAlign: "center" }}
                 color="secondary"
               />
-            ) : (
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                {!hasilScan ? (
-                  <video id="video-scan" width={300} height={300}></video>
-                ) : (
-                  <h2 style={{ color: "gray" }}>{hasilScan}</h2>
-                )}
-              </div>
             )}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() =>
-              dispatch({ type: MODAL_CAMERA_SCAN, payload: false })
-            }
-            color="primary"
-          >
-            Tutup
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

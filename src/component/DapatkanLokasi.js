@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { stateValueProvider } from "../StateProvider";
-import {
-  STATE_MODAL_PIKET,
-  TAMPIL_BUTTON_PIKET,
-  MODAL_LOKASI,
-} from "../const/stateCondition";
+import { MODAL_CAMERA_SCAN, MODAL_LOKASI } from "../const/stateCondition";
 
 const DapatkanLokasi = ({ lat, long }) => {
   console.log(lat);
@@ -13,14 +9,12 @@ const DapatkanLokasi = ({ lat, long }) => {
   const [{ tampilButtonPiket }, dispatch] = stateValueProvider();
   const lanjutKePengisianAbsen = () => {
     dispatch({ type: MODAL_LOKASI, payload: false });
-    dispatch({ type: TAMPIL_BUTTON_PIKET, payload: true });
+    dispatch({ type: MODAL_CAMERA_SCAN, payload: true });
   };
-// lokasi sekolah
-// 98.6710016,3.5913728
 
   return (
     <div style={{ width: "100%" }}>
-      {lat === 3.5913728 && long === 98.6710016 ? (
+      {lat === 3.5848192 && long === 98.664448 ? (
         <div
           style={{
             display: "flex",
