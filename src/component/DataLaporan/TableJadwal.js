@@ -55,7 +55,7 @@ const TableJadwal = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">Nik Guru</TableCell>
+              <TableCell align="center">Nama Guru</TableCell>
               <TableCell align="center">
                 Mata Pelajaran Yang dibawakan
               </TableCell>
@@ -67,7 +67,7 @@ const TableJadwal = () => {
           <TableBody>
             {hasil.map((data, i) => (
               <TableRow key={i}>
-                <TableCell align="center">{data.nikGuru}</TableCell>
+                <TableCell align="center">{data.namaGuru}</TableCell>
                 <TableCell align="center">{data.mataPelDibawakan}</TableCell>
                 <TableCell align="center">{data.jam}</TableCell>
                 <TableCell align="center">{data.hari}</TableCell>

@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import db from "../../firebase";
 import { stateValueProvider } from "../../StateProvider";
+
 const TableData = () => {
   const [hasil, setHasil] = useState([]);
   useEffect(() => {

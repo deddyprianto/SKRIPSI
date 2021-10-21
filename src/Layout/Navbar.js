@@ -27,6 +27,9 @@ function Navbar() {
           <Link to="scanqrcode">
             <li>Scan QRCode</li>
           </Link>
+          <Link to="makeqrcode">
+            <li>Buat QRCode</li>
+          </Link>
           <Link to="login">
             <li>Login</li>
           </Link>

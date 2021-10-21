@@ -15,6 +15,7 @@ import {
   STATE_KELAS,
   STATE_JAM,
   STATE_MAPELDIBAWAKAN,
+  NIK,
 } from "../const/stateCondition";
 
 export const initial = {
@@ -33,6 +34,10 @@ export const initial = {
   hari: "",
   jam: "",
   mapelDibawakan: "",
+  nikGuru: [
+    { nik: 1234, nama: "Rehulina Simamora,B.A" },
+    { nik: 5678, nama: "Bagas Pranata,S.Pd" },
+  ],
 };
 export const reduce = (state, action) => {
   switch (action.type) {

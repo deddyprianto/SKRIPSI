@@ -13,3 +13,4 @@ export const STATE_KELAS = "STATE_KELAS";
 export const STATE_MAPELDIBAWAKAN = "STATE_MAPELDIBAWAKAN";
 export const STATE_HARI = "STATE_HARI";
 export const STATE_JAM = "STATE_JAM";
+export const NIK = "NIK";

@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import "./InputJadwal.css";
 import db from "../../firebase";
+import { stateValueProvider } from "../../StateProvider";
 
 const InputJadwal = () => {
-  const [nik, setNik] = useState("");
+  const [{ nikGuru }, dispatch] = stateValueProvider();
+  const [nama, setNama] = useState("");
   const [mapelRoster, setMapelRoster] = useState("");
   const [jam, setJam] = useState("");
   const [hari, setHari] = useState("");
@@ -12,7 +21,7 @@ const InputJadwal = () => {
 
   const saveData = () => {
     db.collection("Jadwal").add({
-      nikGuru: nik,
+      namaGuru: nama,
       mataPelDibawakan: mapelRoster,
       jam: jam,
       hari: hari,
@@ -30,14 +39,20 @@ const InputJadwal = () => {
         order: 1,
       }}
     >
-      <TextField
-        id="outlined-basic"
-        label="Nik Guru"
-        variant="outlined"
-        color="success"
-        value={nik}
-        onChange={(e) => setNik(e.target.value)}
-      />
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Nama Guru</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label="Nama Guru"
+          onChange={(e) => setNama(e.target.value)}
+          value={nama}
+        >
+          {nikGuru.map((nama) => (
+            <MenuItem value={nama.nama}>{nama.nama}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <TextField
         id="outlined-basic"
         label="Mapel Roster"

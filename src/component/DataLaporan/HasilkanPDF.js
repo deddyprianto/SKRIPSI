@@ -86,8 +86,8 @@ const HasilkanPDF = () => {
         </View>
         <Table style={styles.jarakTable} data={hasil}>
           <TableHeader textAlign={"center"}>
-            <TableCell weighting={0.4}>Nama Guru</TableCell>
-            <TableCell weighting={0.4}>Status Kehadiran</TableCell>
+            <TableCell weighting={0.4}>Nama</TableCell>
+            <TableCell weighting={0.4}>Status</TableCell>
             <TableCell weighting={0.4}>Kelas</TableCell>
             <TableCell weighting={0.4}>Hari</TableCell>
             <TableCell weighting={0.4}>Jam</TableCell>
@@ -104,7 +104,7 @@ const HasilkanPDF = () => {
         </Table>
         <View style={styles.ketAkhir}>
           <Text>Ket Jumlah Kehadiran Guru</Text>
-          <Text>Jumlah Hadir: 3 Guru</Text>
+          <Text>Jumlah Hadir: 1 Guru</Text>
           <Text>Jumlah Sakit: 0</Text>
           <Text>Jumlah Izin: 0</Text>
           <Text>Jumlah Alpha:0</Text>

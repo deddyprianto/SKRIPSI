@@ -97,6 +97,7 @@ function ScanQrCode() {
   const [jam, setJam] = useState("");
   const [hari, setHari] = useState("");
   const [kelas, setKelas] = useState("");
+  const [namaGUru, setNamaGUru] = useState("");
   useEffect(() => {
     Aos.init({
       duration: "2000",
@@ -151,6 +152,7 @@ function ScanQrCode() {
         setJam(data.jam);
         setHari(data.hari);
         setKelas(data.kelas);
+        setNamaGUru(data.namaGuru);
         dispatch({ type: STATE_HARI, payload: data.hari });
         dispatch({ type: STATE_JAM, payload: data.jam });
         dispatch({ type: STATE_KELAS, payload: data.kelas });
@@ -409,32 +411,60 @@ function ScanQrCode() {
             }
             className={classes.root}
           >
-            <ListItem button>
-              <ListItemText primary="Nama" />
-              <ListItemSecondaryAction>
-                <p style={{ color: "gray", fontSize: 15 }}>{hasilScan}</p>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Status Kehadiran" />
-              <ListItemSecondaryAction>{value}</ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Roster Mapel" />
-              <ListItemSecondaryAction>{mapelDibawkan}</ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Hari" />
-              <ListItemSecondaryAction>{hari}</ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Jam" />
-              <ListItemSecondaryAction>{jam}</ListItemSecondaryAction>
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Kelas" />
-              <ListItemSecondaryAction>{kelas}</ListItemSecondaryAction>
-            </ListItem>
+            {dataJadwal.map((data) => {
+              if (data.namaGuru === hasilScan) {
+                return (
+                  <React.Fragment>
+                    <ListItem button>
+                      <ListItemText primary="Nama" />
+                      <ListItemSecondaryAction>
+                        <p style={{ color: "gray", fontSize: 15 }}>
+                          {data.namaGuru}
+                        </p>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                    <ListItem button>
+                      <ListItemText primary="Status" />
+                      <ListItemSecondaryAction>
+                        <p style={{ color: "gray", fontSize: 15 }}>{value}</p>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                    <ListItem button>
+                      <ListItemText primary="Mapel" />
+                      <ListItemSecondaryAction>
+                        <p style={{ color: "gray", fontSize: 15 }}>
+                          {data.mataPelDibawakan}
+                        </p>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                    <ListItem button>
+                      <ListItemText primary="Jam" />
+                      <ListItemSecondaryAction>
+                        <p style={{ color: "gray", fontSize: 15 }}>
+                          {data.jam}
+                        </p>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                    <ListItem button>
+                      <ListItemText primary="Hari" />
+                      <ListItemSecondaryAction>
+                        <p style={{ color: "gray", fontSize: 15 }}>
+                          {data.hari}
+                        </p>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                    <ListItem button>
+                      <ListItemText primary="Kelas" />
+                      <ListItemSecondaryAction>
+                        <p style={{ color: "gray", fontSize: 15 }}>
+                          {data.kelas}
+                        </p>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </React.Fragment>
+                );
+              }
+            })}
           </List>
         </DialogContent>
         <DialogActions>

@@ -11,6 +11,7 @@ import HasilkanPDF from "./component/DataLaporan/HasilkanPDF";
 
 const Main = lazy(() => import("./component/Main"));
 const ScanQrCode = lazy(() => import("./component/ScanQrCode"));
+const MakeQrCode = lazy(() => import("./component/MakeQrCode"));
 const Login = lazy(() => import("./component/Login"));
 const LaporanScreen = lazy(() => import("./component/Laporan/LaporanScreen"));
 
@@ -40,6 +41,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/makeqrcode">
+              <MakeQrCode />
             </Route>
             <Route path="/scanqrcode">
               <ScanQrCode />
