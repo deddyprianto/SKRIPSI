@@ -16,6 +16,9 @@ import TableMapel from "../DataLaporan/TableMapel";
 import TbSuratSakit from "./TbSuratSakit";
 import InputJadwal from "../DataLaporan/InputJadwal";
 import InputMapel from "../DataLaporan/InputMapel";
+import TablePerTahunAjaran from "../DataLaporan/TablePerTahunAjaran";
+import TableDataLama from "../DataLaporan/TableDataLama";
+import InputTahunAjaran from "../DataLaporan/InputTahunAjaran";
 
 const MainLaporan = () => {
   const [{ login }, dispatch] = stateValueProvider();
@@ -47,9 +50,7 @@ const MainLaporan = () => {
         Dasboard Guru SD Swasta Melbourne
       </h2>
       <Divider />
-      <TableData />
-      <HasilkanPDF />
-      <Divider />
+
       <div
         style={{
           width: "100%",
@@ -73,10 +74,23 @@ const MainLaporan = () => {
         <TableMapel />
         <InputMapel />
       </div>
-      <Divider />
+      <Divider light={true} />
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <InputTahunAjaran />
+        <TablePerTahunAjaran />
+      </div>
       <TbSuratSakit />
-
-      {/* just only a snackbar */}
+      <Divider />
+      <TableData />
+      <HasilkanPDF />
+      <TableDataLama />
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",

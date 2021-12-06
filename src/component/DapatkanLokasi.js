@@ -14,7 +14,7 @@ const DapatkanLokasi = ({ lat, long }) => {
 
   return (
     <div style={{ width: "100%" }}>
-      {lat === 3.588096 && long === 98.6710016 ? (
+      {lat === 3.588096 && long === 98.6742784 ? (
         <div
           style={{
             display: "flex",

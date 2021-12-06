@@ -27,6 +27,11 @@ const InputJadwal = () => {
       hari: hari,
       kelas: kelas,
     });
+    setNama("");
+    setMapelRoster("");
+    setJam("");
+    setHari("");
+    setKelas("");
   };
 
   return (

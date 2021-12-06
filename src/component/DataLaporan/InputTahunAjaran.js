@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
-import "./InputJadwal.css";
 import db from "../../firebase";
 
-const InputMapel = () => {
-  const [mapel, setMapel] = useState("");
+const InputTahunAjaran = () => {
+  const [tahun, setTahun] = useState("");
 
   const saveData = () => {
-    db.collection("mataPelajaran").add({
-      MataPelajaran: mapel,
+    db.collection("tahunAjaran").add({
+      tahunajarn: tahun,
     });
-    setMapel("");
+    setTahun("");
   };
+
   return (
     <div
       style={{
@@ -23,18 +23,18 @@ const InputMapel = () => {
       }}
     >
       <TextField
-        value={mapel}
-        onChange={(e) => setMapel(e.target.value)}
+        value={tahun}
+        onChange={(e) => setTahun(e.target.value)}
         id="outlined-basic"
-        label="Nama Mata Pelajaran"
+        label="Tahun Ajaran"
         variant="standard"
         color="success"
       />
       <Button variant="contained" color="secondary" onClick={saveData}>
-        Buat Mapel
+        Kirim Data
       </Button>
     </div>
   );
 };
 
-export default InputMapel;
+export default InputTahunAjaran;

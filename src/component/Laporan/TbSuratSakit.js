@@ -59,17 +59,21 @@ const TbSuratSakit = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {hasil.map((data, i) => (
-              <TableRow key={i}>
-                <TableCell component="th" scope="row">
-                  {data.namaGuru}
-                </TableCell>
-                <TableCell align="right">{data.status}</TableCell>
-                <TableCell align="right">
-                  <img src={data.urlImg} width={300} height={200} alt="" />
-                </TableCell>
-              </TableRow>
-            ))}
+            {hasil.map((data, i) => {
+              if (data.status === "sakit") {
+                return (
+                  <TableRow key={i}>
+                    <TableCell component="th" scope="row">
+                      {data.namaGuru}
+                    </TableCell>
+                    <TableCell align="right">{data.status}</TableCell>
+                    <TableCell align="right">
+                      <img src={data.urlImg} width={300} height={200} alt="" />
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+            })}
           </TableBody>
         </Table>
       </TableContainer>

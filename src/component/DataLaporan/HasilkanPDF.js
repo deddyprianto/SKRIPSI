@@ -21,15 +21,22 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import db from "../../firebase";
 import { stateValueProvider } from "../../StateProvider";
+
 const HasilkanPDF = () => {
   const [hasil, setHasil] = useState([]);
-
+  const [tahun, setTahun] = useState("");
   useEffect(() => {
     db.collection("guru").onSnapshot((snapshot) => {
       setHasil(snapshot.docs.map((doc) => doc.data()));
     });
+    db.collection("tahunAjaran").onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => doc.data());
+      setTahun(data[1]);
+    });
   }, []);
+
   const [{ kelas, hari, jam, mapelDibawakan }, dispatch] = stateValueProvider();
+
   const styles = StyleSheet.create({
     textLinkPDF: {
       textDecoration: "none",
@@ -82,7 +89,7 @@ const HasilkanPDF = () => {
           <Text style={styles.textJudul}>
             Laporan Kehadiran Guru SD SWASTA Melbourne
           </Text>
-          <Text style={styles.textJudul}>Per Tanggal: {hari}</Text>
+          <Text style={styles.textJudul}>Tahun Ajaran: 2019/2020</Text>
         </View>
         <Table style={styles.jarakTable} data={hasil}>
           <TableHeader textAlign={"center"}>

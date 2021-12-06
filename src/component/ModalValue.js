@@ -8,6 +8,7 @@ import { STATE_BUKTI_SAKIT, STATE_MODAL } from "../const/stateCondition";
 import firebase from "firebase";
 import db, { storage } from "../firebase";
 import SendIcon from "@material-ui/icons/Send";
+
 // render Component
 const ModalValue = () => {
   const [

@@ -9,11 +9,12 @@ import "./TableData.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import db from "../../firebase";
-import { stateValueProvider } from "../../StateProvider";
 
-const TableData = () => {
+import { TrackChangesRounded } from "@material-ui/icons";
+
+const TableDataLama = () => {
   const [hasil, setHasil] = useState([]);
-  const [tahun, setTahun] = useState("");
+  const [tahun, setTahun] = useState([]);
 
   useEffect(() => {
     db.collection("guru").onSnapshot((snapshot) => {
@@ -21,11 +22,10 @@ const TableData = () => {
     });
     db.collection("tahunAjaran").onSnapshot((snapshot) => {
       const data = snapshot.docs.map((doc) => doc.data());
-      setTahun(data[1]);
+      setTahun(data[0]);
     });
   }, []);
 
-  const [{ kelas, hari, jam, mapelDibawakan }, dispatch] = stateValueProvider();
   const useStyles = makeStyles((theme) => ({
     root: {
       display: "flex",
@@ -58,9 +58,8 @@ const TableData = () => {
     >
       <h2 style={{ textAlign: "center", color: "gray" }}>
         Data Rekap Laporan Absensi Guru SD Swasta Melbourne Tahun Ajaran
-        2020/2021
+        2019/2020
       </h2>
-
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -97,4 +96,4 @@ const TableData = () => {
   );
 };
 
-export default TableData;
+export default TableDataLama;

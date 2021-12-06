@@ -11,11 +11,12 @@ import {
   STATE_WAKTU_MULAI,
   MODAL_CAMERA_SCAN,
   STATE_VIDEO_SCAN,
-  STATE_HARI,
-  STATE_KELAS,
-  STATE_JAM,
-  STATE_MAPELDIBAWAKAN,
   NIK,
+  JAM,
+  HARI,
+  KELAS,
+  MAPEL_DIBAWAKAN,
+  NAMA_GURU,
 } from "../const/stateCondition";
 
 export const initial = {
@@ -30,15 +31,17 @@ export const initial = {
   waktuMulaiSet: "",
   modalCameraScan: false,
   videoScan: false,
-  kelas: "",
-  hari: "",
   jam: "",
+  hari: "",
+  kelas: "",
   mapelDibawakan: "",
+  namaGuruu: "",
   nikGuru: [
     { nik: 1234, nama: "Rehulina Simamora,B.A" },
     { nik: 5678, nama: "Bagas Pranata,S.Pd" },
   ],
 };
+
 export const reduce = (state, action) => {
   switch (action.type) {
     case STATE_LOGIN:
@@ -63,14 +66,16 @@ export const reduce = (state, action) => {
       return { ...state, modalCameraScan: action.payload };
     case STATE_VIDEO_SCAN:
       return { ...state, videoScan: action.payload };
-    case STATE_HARI:
-      return { ...state, hari: action.payload };
-    case STATE_JAM:
+    case JAM:
       return { ...state, jam: action.payload };
-    case STATE_KELAS:
+    case HARI:
+      return { ...state, hari: action.payload };
+    case KELAS:
       return { ...state, kelas: action.payload };
-    case STATE_MAPELDIBAWAKAN:
+    case MAPEL_DIBAWAKAN:
       return { ...state, mapelDibawakan: action.payload };
+    case NAMA_GURU:
+      return { ...state, namaGuruu: action.payload };
     default:
       return state;
   }

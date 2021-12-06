@@ -22,10 +22,11 @@ import {
   STATE_WAKTU_MULAI,
   MODAL_CAMERA_SCAN,
   STATE_VIDEO_SCAN,
-  STATE_JAM,
-  STATE_KELAS,
-  STATE_MAPELDIBAWAKAN,
-  STATE_HARI,
+  JAM,
+  HARI,
+  KELAS,
+  MAPEL_DIBAWAKAN,
+  NAMA_GURU,
 } from "../const/stateCondition";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -71,6 +72,11 @@ function ScanQrCode() {
       mapelSet,
       waktuMulaiSet,
       modalCameraScan,
+      jam,
+      hari,
+      kelas,
+      mapelDibawakan,
+      namaGuruu,
     },
     dispatch,
   ] = stateValueProvider();
@@ -93,11 +99,7 @@ function ScanQrCode() {
   const [loadingCamera, setLoadingCamera] = useState(false);
   const [proggress, setProggress] = useState(10);
   const [dataJadwal, setDataJadwal] = useState([]);
-  const [mapelDibawkan, setMapelDibawakan] = useState("");
-  const [jam, setJam] = useState("");
-  const [hari, setHari] = useState("");
-  const [kelas, setKelas] = useState("");
-  const [namaGUru, setNamaGUru] = useState("");
+
   useEffect(() => {
     Aos.init({
       duration: "2000",
@@ -140,30 +142,24 @@ function ScanQrCode() {
     };
   }, [modalCameraScan]);
 
+  // get tahun
+  const tahunFullYear = new Date().getFullYear().toString();
+
   const saveData = () => {
     const checkData = db.collection("guru").add({
       name: hasilScan,
       status: value,
+      tahun: tahunFullYear,
+      jam,
+      hari,
+      kelas,
+      mapelDibawakan,
     });
-
     if (checkData) {
-      dataJadwal.map((data) => {
-        setMapelDibawakan(data.mataPelDibawakan);
-        setJam(data.jam);
-        setHari(data.hari);
-        setKelas(data.kelas);
-        setNamaGUru(data.namaGuru);
-        dispatch({ type: STATE_HARI, payload: data.hari });
-        dispatch({ type: STATE_JAM, payload: data.jam });
-        dispatch({ type: STATE_KELAS, payload: data.kelas });
-        dispatch({
-          type: STATE_MAPELDIBAWAKAN,
-          payload: data.mataPelDibawakan,
-        });
-      });
       setPemberitahuanAbsen(true);
     }
   };
+
   const handleChange = (event) => {
     setValue(event.target.value);
     if (event.target.value === "Hadir") {
@@ -208,6 +204,13 @@ function ScanQrCode() {
 
   // function untuk mengecek lokasi guru
   const lacakLokasiGuru = () => {
+    dataJadwal.map((data) => {
+      dispatch({ type: JAM, payload: data.jam });
+      dispatch({ type: HARI, payload: data.hari });
+      dispatch({ type: KELAS, payload: data.kelas });
+      dispatch({ type: NAMA_GURU, payload: data.namaGuru });
+      dispatch({ type: MAPEL_DIBAWAKAN, payload: data.mataPelDibawakan });
+    });
     dispatch({ type: MODAL_LOKASI, payload: true });
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -221,7 +224,6 @@ function ScanQrCode() {
 
   const today = new Date();
   const time = today.getHours() + ":" + today.getMinutes();
-  console.log(hasilScan);
 
   return (
     <div className="container__ScanQrCode">
@@ -411,60 +413,48 @@ function ScanQrCode() {
             }
             className={classes.root}
           >
-            {dataJadwal.map((data) => {
-              if (data.namaGuru === hasilScan) {
-                return (
-                  <React.Fragment>
-                    <ListItem button>
-                      <ListItemText primary="Nama" />
-                      <ListItemSecondaryAction>
-                        <p style={{ color: "gray", fontSize: 15 }}>
-                          {data.namaGuru}
-                        </p>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Status" />
-                      <ListItemSecondaryAction>
-                        <p style={{ color: "gray", fontSize: 15 }}>{value}</p>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Mapel" />
-                      <ListItemSecondaryAction>
-                        <p style={{ color: "gray", fontSize: 15 }}>
-                          {data.mataPelDibawakan}
-                        </p>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Jam" />
-                      <ListItemSecondaryAction>
-                        <p style={{ color: "gray", fontSize: 15 }}>
-                          {data.jam}
-                        </p>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Hari" />
-                      <ListItemSecondaryAction>
-                        <p style={{ color: "gray", fontSize: 15 }}>
-                          {data.hari}
-                        </p>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Kelas" />
-                      <ListItemSecondaryAction>
-                        <p style={{ color: "gray", fontSize: 15 }}>
-                          {data.kelas}
-                        </p>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  </React.Fragment>
-                );
-              }
-            })}
+            {namaGuruu === hasilScan && (
+              <React.Fragment>
+                <ListItem button>
+                  <ListItemText primary="Nama" />
+                  <ListItemSecondaryAction>
+                    <p style={{ color: "gray", fontSize: 15 }}>{namaGuruu}</p>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Status" />
+                  <ListItemSecondaryAction>
+                    <p style={{ color: "gray", fontSize: 15 }}>{value}</p>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Mapel" />
+                  <ListItemSecondaryAction>
+                    <p style={{ color: "gray", fontSize: 15 }}>
+                      {mapelDibawakan}
+                    </p>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Jam" />
+                  <ListItemSecondaryAction>
+                    <p style={{ color: "gray", fontSize: 15 }}>{jam}</p>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Hari" />
+                  <ListItemSecondaryAction>
+                    <p style={{ color: "gray", fontSize: 15 }}>{hari}</p>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Kelas" />
+                  <ListItemSecondaryAction>
+                    <p style={{ color: "gray", fontSize: 15 }}>{kelas}</p>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </React.Fragment>
+            )}
           </List>
         </DialogContent>
         <DialogActions>

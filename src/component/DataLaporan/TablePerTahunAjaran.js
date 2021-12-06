@@ -10,11 +10,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import db from "../../firebase";
 
-const TableMapel = () => {
+const TablePerTahunAjaran = () => {
   const [hasil, setHasil] = useState([]);
-
   useEffect(() => {
-    db.collection("mataPelajaran").onSnapshot((snapshot) => {
+    db.collection("tahunAjaran").onSnapshot((snapshot) => {
       setHasil(snapshot.docs.map((doc) => doc.data()));
     });
   }, []);
@@ -47,23 +46,21 @@ const TableMapel = () => {
         order: 2,
       }}
     >
-      <h2 style={{ textAlign: "center", color: "gray" }}>
-        Table Mata Pelajaran
-      </h2>
+      <h2 style={{ textAlign: "center", color: "gray" }}>Tabel Tahun Ajaran</h2>
 
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">No</TableCell>
-              <TableCell align="center">Nama Mata Pelajaran</TableCell>
+              <TableCell align="center">Tahun Ajaran</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {hasil.map((data, i) => (
               <TableRow key={i}>
                 <TableCell align="center">{i + 1}</TableCell>
-                <TableCell align="center">{data.MataPelajaran}</TableCell>
+                <TableCell align="center">{data.tahunajarn}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -73,4 +70,4 @@ const TableMapel = () => {
   );
 };
 
-export default TableMapel;
+export default TablePerTahunAjaran;
